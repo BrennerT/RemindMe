@@ -15,4 +15,27 @@ public class Model {
 
     }
 
+    public DBAdapter getDbAd() {
+        return dbAd;
+    }
+
+    public void setDbAd(DBAdapter dbAd) {
+        this.dbAd = dbAd;
+    }
+
+    public List<ReminderList> getList() {
+        return list;
+    }
+
+    public void setList(List<ReminderList> list) {
+        this.list = list;
+    }
+
+    public List<String> getSettings() {
+        return settings;
+    }
+
+    public void setSettings(List<String> settings) {
+        this.settings = settings;
+    }
 }

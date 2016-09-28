@@ -7,6 +7,8 @@ import android.widget.Button;
 
 import java.util.List;
 
+import blau.team.remindme.db.ReminderList;
+
 public class ArchiveActivity extends AppCompatActivity {
 
     private Boolean vibration, sound;
@@ -26,8 +28,39 @@ public class ArchiveActivity extends AppCompatActivity {
         }
     };
 
-//    public List<ReminderList> getDeactiveLists(){
-//        return null;
-//    }
+    public List<ReminderList> getDeactiveLists(){
+        return null;
+    }
 
+    public Boolean getVibration() {
+        return vibration;
+    }
+
+    public void setVibration(Boolean vibration) {
+        this.vibration = vibration;
+    }
+
+    public Boolean getSound() {
+        return sound;
+    }
+
+    public void setSound(Boolean sound) {
+        this.sound = sound;
+    }
+
+    public List<Button> getRestoreButtons() {
+        return restoreButtons;
+    }
+
+    public void setRestoreButtons(List<Button> restoreButtons) {
+        this.restoreButtons = restoreButtons;
+    }
+
+    public View.OnClickListener getRestoreButtonPressed() {
+        return restoreButtonPressed;
+    }
+
+    public void setRestoreButtonPressed(View.OnClickListener restoreButtonPressed) {
+        this.restoreButtonPressed = restoreButtonPressed;
+    }
 }

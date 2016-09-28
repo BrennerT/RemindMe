@@ -16,4 +16,12 @@ public class GPSLocator {
     public boolean isOutOfSquare(Location l){
         return false;
     }
+
+    public GPSSquare getActual() {
+        return actual;
+    }
+
+    public void setActual(GPSSquare actual) {
+        this.actual = actual;
+    }
 }

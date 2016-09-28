@@ -29,4 +29,52 @@ public class AddActivity extends AppCompatActivity {
 
         }
     };
+
+    public Button getAddButton() {
+        return addButton;
+    }
+
+    public void setAddButton(Button addButton) {
+        this.addButton = addButton;
+    }
+
+    public Boolean getMode() {
+        return mode;
+    }
+
+    public void setMode(Boolean mode) {
+        this.mode = mode;
+    }
+
+    public CalendarView getCalendar() {
+        return calendar;
+    }
+
+    public void setCalendar(CalendarView calendar) {
+        this.calendar = calendar;
+    }
+
+    public DatePicker getDp() {
+        return dp;
+    }
+
+    public void setDp(DatePicker dp) {
+        this.dp = dp;
+    }
+
+    public TimePicker getTp() {
+        return tp;
+    }
+
+    public void setTp(TimePicker tp) {
+        this.tp = tp;
+    }
+
+    public View.OnClickListener getAddButtonPressed() {
+        return addButtonPressed;
+    }
+
+    public void setAddButtonPressed(View.OnClickListener addButtonPressed) {
+        this.addButtonPressed = addButtonPressed;
+    }
 }
