@@ -7,13 +7,14 @@ import android.widget.Button;
 
 import java.util.List;
 
+import blau.team.remindme.db.Model;
 import blau.team.remindme.db.ReminderList;
 
 public class ArchiveActivity extends AppCompatActivity {
 
     private Boolean vibration, sound;
     private List<Button> restoreButtons;
-//    private Model model;
+    private Model model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
