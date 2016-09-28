@@ -17,7 +17,12 @@
         </activity>
         <activity android:name=".ArchiveActivity" />
         <activity android:name=".SettingActivity" />
-        <activity android:name=".AddActivity"></activity>
+        <activity android:name=".AddActivity" />
+
+        <service
+            android:name=".notifier.Notifier"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>
