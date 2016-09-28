@@ -10,4 +10,72 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="blau.team.remindme.SettingActivity">
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/linearLayout">
+
+        <Switch
+            android:text="Sound"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/sound"
+            android:layout_weight="1" />
+
+        <Switch
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/vibration"
+            android:layout_weight="1"
+            android:text="Vibration" />
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.25"
+            android:id="@+id/gridLayout">
+
+            <Button
+                android:text="Corner 3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="3"
+                android:layout_column="0"
+                android:id="@+id/corner3" />
+
+            <Button
+                android:text="Corner 2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="1"
+                android:layout_column="3"
+                android:id="@+id/corner2" />
+
+            <Button
+                android:text="Corner 1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="1"
+                android:layout_column="0"
+                android:id="@+id/corner1" />
+
+            <Button
+                android:text="Corner 4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="3"
+                android:layout_column="3"
+                android:id="@+id/corner4" />
+
+            <TextView
+                android:text="Setting GPS Positions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="0"
+                android:layout_column="0" />
+        </GridLayout>
+    </LinearLayout>
 </RelativeLayout>
