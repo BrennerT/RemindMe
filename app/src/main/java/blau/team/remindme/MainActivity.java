@@ -1,5 +1,6 @@
 package blau.team.remindme;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,26 +24,37 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        addButton = (Button) findViewById(R.id.addButton);
+        settingsButton = (Button) findViewById(R.id.settingsButton);
+        archiveButton = (Button) findViewById(R.id.archiveButton);
+
+        addButton.setOnClickListener(addButtonPressed);
+        settingsButton.setOnClickListener(settingsButtonPressed);
+        archiveButton.setOnClickListener(archiveButtonPressed);
     }
 
     View.OnClickListener addButtonPressed = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
-
+            Intent changeActivityAdd = new Intent(getApplicationContext(), AddActivity.class);
+            startActivity(changeActivityAdd);
         }
     };
 
     View.OnClickListener settingsButtonPressed = new View.OnClickListener(){
         @Override
         public void onClick(View v){
-
+            Intent changeActivitySettings = new Intent(getApplicationContext(), SettingActivity.class);
+            startActivity(changeActivitySettings);
         }
     };
 
     View.OnClickListener archiveButtonPressed = new View.OnClickListener(){
         @Override
         public void onClick(View v){
-
+            Intent changeActivityArchive = new Intent(getApplicationContext(),ArchiveActivity.class);
+            startActivity(changeActivityArchive);
         }
     };
 
