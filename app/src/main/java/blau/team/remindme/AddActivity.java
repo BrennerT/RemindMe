@@ -1,82 +1,125 @@
 package blau.team.remindme;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TimePicker;
+
+import java.util.Date;
 
 import blau.team.remindme.db.Model;
 
+import static android.R.attr.start;
+
 public class AddActivity extends AppCompatActivity {
 
-    private Button addButton;
+    private Button addButton, changeDateButton, changeTimeButton, submitDate, submitTime;
+    private LinearLayout linearLayout;
     private Boolean mode;
-    private CalendarView calendar;
+    private Switch modeSwitch;
+//    private CalendarView calendar;
     private DatePicker dp;
     private TimePicker tp;
     private Model model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
+
+        linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
+
+        modeSwitch = (Switch) findViewById(R.id.modeSwitch);
+        modeSwitch.setOnClickListener(switchHandler);
+
+        addButton = (Button) findViewById(R.id.addButton);
+        changeDateButton = (Button) findViewById(R.id.changeDateButton);
+        changeTimeButton = (Button) findViewById(R.id.changeTimeButton);
+
+        addButton.setOnClickListener(addButtonPressed);
+        changeDateButton.setOnClickListener(changeDateButtonPressed);
+        changeTimeButton.setOnClickListener(changeTimeButtonPressed);
     }
 
-    View.OnClickListener addButtonPressed= new View.OnClickListener(){
+    public Boolean getMode() {
+        return this.mode;
+    }
+
+    public void toggleMode() {
+        this.mode = !this.mode;
+    }
+
+    public View.OnClickListener switchHandler = new View.OnClickListener() {
         @Override
-        public void onClick(View v){
+        public void onClick(View v) {
+            toggleMode();
+        }
+    };
+
+    public View.OnClickListener addButtonPressed = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent changeActivityMain = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(changeActivityMain);
+        }
+    };
+
+    public View.OnClickListener changeDateButtonPressed = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            dp = new DatePicker(AddActivity.this);
+
+            submitDate = new Button(AddActivity.this);
+            submitDate.setText("Submit Date");
+            submitDate.setOnClickListener(onSubmitDate);
+
+            linearLayout.addView(dp, 2);
+            linearLayout.addView(submitDate,3);
 
         }
     };
 
-    public Button getAddButton() {
-        return addButton;
-    }
+    public View.OnClickListener onSubmitDate = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            // TODO: Add functionality to get Date from DatePicker
 
-    public void setAddButton(Button addButton) {
-        this.addButton = addButton;
-    }
+            linearLayout.removeView(dp);
+            linearLayout.removeView(submitDate);
+        }
+    };
 
-    public Boolean getMode() {
-        return mode;
-    }
+    public View.OnClickListener changeTimeButtonPressed = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
 
-    public void setMode(Boolean mode) {
-        this.mode = mode;
-    }
+            tp = new TimePicker(AddActivity.this);
+            tp.setIs24HourView(true);
 
-    public CalendarView getCalendar() {
-        return calendar;
-    }
+            submitTime = new Button(AddActivity.this);
+            submitTime.setText("Submit Time");
+            submitTime.setOnClickListener(onSubmitTime);
 
-    public void setCalendar(CalendarView calendar) {
-        this.calendar = calendar;
-    }
+            linearLayout.addView(tp,3);
+            linearLayout.addView(submitTime,4);
+        }
+    };
 
-    public DatePicker getDp() {
-        return dp;
-    }
+    public View.OnClickListener onSubmitTime = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            // TODO: Add functionality to get Time from TimePicker
 
-    public void setDp(DatePicker dp) {
-        this.dp = dp;
-    }
-
-    public TimePicker getTp() {
-        return tp;
-    }
-
-    public void setTp(TimePicker tp) {
-        this.tp = tp;
-    }
-
-    public View.OnClickListener getAddButtonPressed() {
-        return addButtonPressed;
-    }
-
-    public void setAddButtonPressed(View.OnClickListener addButtonPressed) {
-        this.addButtonPressed = addButtonPressed;
-    }
+            linearLayout.removeView(tp);
+            linearLayout.removeView(submitTime);
+        }
+    };
 }

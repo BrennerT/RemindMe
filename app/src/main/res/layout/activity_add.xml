@@ -16,24 +16,64 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:id="@+id/linearLayout">
 
         <Switch
             android:text="Standard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/switch1" />
+            android:id="@+id/modeSwitch" />
 
-        <CalendarView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="308dp"
-            android:id="@+id/calendarView" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:inputType="date"
+                android:ems="10"
+                android:layout_weight="0.5"
+                android:text="01.01.2015"
+                android:id="@+id/dateText" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/changeDateButton"
+                android:text="change date"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:inputType="time"
+                android:ems="10"
+                android:layout_weight="0.5"
+                android:text="00:00"
+                android:id="@+id/timetText" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/changeTimeButton"
+                android:text="change time"/>
+
+        </LinearLayout>
 
         <Button
             android:text="Add List"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/button" />
+            android:id="@+id/addButton" />
 
 
     </LinearLayout>
