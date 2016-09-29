@@ -8,6 +8,8 @@ import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
+import blau.team.remindme.db.Model;
+
 public class AddActivity extends AppCompatActivity {
 
     private Button addButton;
@@ -15,7 +17,7 @@ public class AddActivity extends AppCompatActivity {
     private CalendarView calendar;
     private DatePicker dp;
     private TimePicker tp;
-//    private Model model;
+    private Model model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

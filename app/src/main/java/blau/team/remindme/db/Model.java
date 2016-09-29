@@ -37,5 +37,6 @@ public class Model {
 
     public void setSettings(List<String> settings) {
         this.settings = settings;
-    }
+    };
+
 }
