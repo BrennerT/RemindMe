@@ -2,6 +2,8 @@ package blau.team.remindme.db;
 
 import java.util.List;
 
+import io.realm.Realm;
+
 /**
  * Created by Torben on 28.09.2016.
  */

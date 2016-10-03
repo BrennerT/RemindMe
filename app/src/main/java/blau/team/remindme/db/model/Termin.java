@@ -14,9 +14,9 @@ import io.realm.annotations.PrimaryKey;
 
 public class Termin extends RealmObject {
     @PrimaryKey
-    public int termin_id;
-    public Date date;
-    public Time beginTime, endTime;
+    private int termin_id;
+    private Date date;
+    private Time beginTime, endTime;
 
     public int getTermin_id() {
         return termin_id;

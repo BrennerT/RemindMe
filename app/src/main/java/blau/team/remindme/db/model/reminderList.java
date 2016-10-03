@@ -1,8 +1,10 @@
 package blau.team.remindme.db.model;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
+import static android.R.attr.name;
 import static android.R.id.primary;
 
 /**
@@ -11,10 +13,39 @@ import static android.R.id.primary;
 
 public class ReminderList extends RealmObject {
     @PrimaryKey
-    public int list_id;
-    public int interval;
-    public boolean active;
-    public String name;
+    private int list_id;
+    private int interval;
+    private boolean active;
+    private String name;
+    // 1 to n relations to ReminderElement and Termin
+    private RealmList<ReminderElement> elements;
+    private RealmList<Termin> termins;
+    // 1 to 1 relation to settings
+    private Settings setting;
+
+    public RealmList<ReminderElement> getElements() {
+        return elements;
+    }
+
+    public void setElements(RealmList<ReminderElement> elements) {
+        this.elements = elements;
+    }
+
+    public RealmList<Termin> getTermins() {
+        return termins;
+    }
+
+    public void setTermins(RealmList<Termin> termins) {
+        this.termins = termins;
+    }
+
+    public Settings getSetting() {
+        return setting;
+    }
+
+    public void setSetting(Settings setting) {
+        this.setting = setting;
+    }
 
     public int getList_id() {
         return list_id;
