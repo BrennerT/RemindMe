@@ -8,7 +8,7 @@ import android.widget.Button;
 import java.util.List;
 
 import blau.team.remindme.db.Model;
-import blau.team.remindme.db.ReminderList;
+import blau.team.remindme.db.model.ReminderList;
 
 public class ArchiveActivity extends AppCompatActivity {
 

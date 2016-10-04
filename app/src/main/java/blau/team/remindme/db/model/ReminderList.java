@@ -11,7 +11,7 @@ import static android.R.id.primary;
  * Created by Torben on 30.09.2016.
  */
 
-public class ReminderListTable extends RealmObject {
+public class ReminderList extends RealmObject {
     @PrimaryKey
     private String list_id;
     private int interval;

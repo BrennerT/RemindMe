@@ -10,7 +10,7 @@ import android.widget.TableLayout;
 import java.util.List;
 
 import blau.team.remindme.db.Model;
-import blau.team.remindme.db.ReminderList;
+import blau.team.remindme.db.model.ReminderList;
 import blau.team.remindme.notifier.Notifier;
 
 public class MainActivity extends AppCompatActivity {

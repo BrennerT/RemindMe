@@ -2,9 +2,12 @@ package blau.team.remindme.db;
 
 import java.util.List;
 
-import blau.team.remindme.db.model.ReminderListTable;
+import blau.team.remindme.db.model.ReminderList;
 import io.realm.Realm;
 import io.realm.RealmResults;
+
+import static android.R.attr.id;
+import static android.media.CamcorderProfile.get;
 
 /**
  * Created by Torben on 28.09.2016.
@@ -12,25 +15,40 @@ import io.realm.RealmResults;
 
 public class DBAdapter {
 
-    Realm realm = Realm.getDefaultInstance();
+    private Realm realm = Realm.getDefaultInstance();
 
-    public ReminderList getListById(int id){
-        RealmResults<ReminderListTable> result = realm.where(ReminderListTable.class).equalTo("list_id", id).findAll();
-        ReminderList rml = new ReminderList();
-        rml.setId(result.get(0).getList_id());
-        return null;
+    /*
+     *  Created by Torben on 04.10.2016
+     *  Searches for List with same id in Database and returns the first found list.
+     */
+    public ReminderList getListById(String id){
+        RealmResults<ReminderList> result = realm.where(ReminderList.class).equalTo("list_id", id).findAll();
+        ReminderList resultList = result.get(0);
+        return resultList;
     }
 
+    /*
+     *  Created by Torben on 04.10.2016
+     *  Adds new List to database
+     */
     public void addList(ReminderList r){
 
     }
 
+    /*
+     *  Created by Torben on 04.10.2016
+     *  Returns all Lists in Database
+     */
     public List<ReminderList> getAllLists(){
-        RealmResults<ReminderListTable> result = realm.where(ReminderListTable.class).findAll();
-        return null;
+        RealmResults<ReminderList> result = realm.where(ReminderList.class).findAll();
+        return result;
     }
 
-    public void deleteList(int id){
+    /*
+     *  Created by Torben on 04.10.2016
+     *  Deletes the first List found for one ID
+     */
+    public void deleteList(String id){
 
     }
 
