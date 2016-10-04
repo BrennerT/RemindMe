@@ -1,9 +1,20 @@
 package blau.team.remindme.db;
 
-import java.util.List;
+import android.location.Location;
 
+import java.sql.Time;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+
+import blau.team.remindme.SettingActivity;
+import blau.team.remindme.db.model.ReminderElement;
 import blau.team.remindme.db.model.ReminderList;
+import blau.team.remindme.db.model.Settings;
+import blau.team.remindme.db.model.Termin;
 import io.realm.Realm;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 
 import static android.R.attr.id;
@@ -29,10 +40,59 @@ public class DBAdapter {
 
     /*
      *  Created by Torben on 04.10.2016
-     *  Adds new List to database
+     *  Takes the Data of the parameters and creates an entry in Table ReminderList
      */
-    public void addList(ReminderList r){
+    public void addList(int interval, boolean active, String name, RealmList<ReminderElement> elements, RealmList<Termin> termins, Settings setting){
+        realm.beginTransaction();
+        ReminderList list = realm.createObject(ReminderList.class);
+        list.setList_id(UUID.randomUUID().toString());
+        list.setName(name);
+        list.setActive(active);
+        list.setInterval(interval);
+        list.setElements(elements);
+        list.setTermins(termins);
+        list.setSetting(setting);
+        realm.commitTransaction();
+    }
 
+    /*
+     *  Created by Torben on 04.10.2016
+     *  Creates a new entry in Table ReminderElement
+     */
+    public void addElement(String name){
+        realm.beginTransaction();
+        ReminderElement element = realm.createObject(ReminderElement.class);
+        element.setElement_Id(UUID.randomUUID().toString());
+        element.setName(name);
+        realm.commitTransaction();
+    }
+
+    /*
+     *  Created by Torben on 04.10.2016
+     *  Creates a new entry in table Settings
+     */
+    public void addSetting(boolean sound, boolean vibration, Location[] locations){
+        realm.beginTransaction();
+        Settings setting = realm.createObject(Settings.class);
+        setting.setSettings_id(UUID.randomUUID().toString());
+        setting.setSound(sound);
+        setting.setVibration(vibration);
+        setting.setLocations(locations);
+        realm.commitTransaction();
+    }
+
+    /*
+     *  Created by Torben on 04.10.2016
+     *  Creates a new entry in table Termin
+     */
+    public void addTermin(Date date, Time beginTime, Time endTime){
+        realm.beginTransaction();
+        Termin termin = realm.createObject(Termin.class);
+        termin.setTermin_id(UUID.randomUUID().toString());
+        termin.setDate(date);
+        termin.setBeginTime(beginTime);
+        termin.setEndTime(endTime);
+        realm.commitTransaction();
     }
 
     /*
@@ -49,14 +109,19 @@ public class DBAdapter {
      *  Deletes the first List found for one ID
      */
     public void deleteList(String id){
-
+        realm.beginTransaction();
+        RealmResults<ReminderList> result = realm.where(ReminderList.class).equalTo("list_id",id).findAll();
+        result.deleteFromRealm(0);
+        realm.commitTransaction();
     }
 
-    public List<String> getSettings(){
-        return null;
-    }
 
-    public void setSettings(){
+    // Diese sollten mit den aktuellen Methoden nicht notwendig sein
+//    public List<String> getSettings(){
+//        return null;
+//    }
+//
+//    public void setSettings(){
 
     }
 }
