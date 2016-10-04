@@ -17,6 +17,7 @@ import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmResults;
 
+import static android.R.attr.end;
 import static android.R.attr.id;
 import static android.media.CamcorderProfile.get;
 
@@ -85,13 +86,12 @@ public class DBAdapter {
      *  Created by Torben on 04.10.2016
      *  Creates a new entry in table Termin
      */
-    public void addTermin(Date date, Time beginTime, Time endTime){
+    public void addTermin(Date beginDate, Date endDate){
         realm.beginTransaction();
         Termin termin = realm.createObject(Termin.class);
         termin.setTermin_id(UUID.randomUUID().toString());
-        termin.setDate(date);
-        termin.setBeginTime(beginTime);
-        termin.setEndTime(endTime);
+        termin.setBeginDate(beginDate);
+        termin.setEndDate(endDate);
         realm.commitTransaction();
     }
 
@@ -124,4 +124,3 @@ public class DBAdapter {
 //    public void setSettings(){
 
     }
-}
