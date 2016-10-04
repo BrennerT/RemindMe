@@ -23,7 +23,7 @@ public class AddActivity extends AppCompatActivity {
     private LinearLayout linearLayout;
     private Boolean mode;
     private Switch modeSwitch;
-//    private CalendarView calendar;
+    //    private CalendarView calendar;
     private DatePicker dp;
     private TimePicker tp;
     private Model model;
@@ -82,7 +82,7 @@ public class AddActivity extends AppCompatActivity {
             submitDate.setOnClickListener(onSubmitDate);
 
             linearLayout.addView(dp, 2);
-            linearLayout.addView(submitDate,3);
+            linearLayout.addView(submitDate, 3);
 
         }
     };
@@ -108,8 +108,8 @@ public class AddActivity extends AppCompatActivity {
             submitTime.setText("Submit Time");
             submitTime.setOnClickListener(onSubmitTime);
 
-            linearLayout.addView(tp,3);
-            linearLayout.addView(submitTime,4);
+            linearLayout.addView(tp, 3);
+            linearLayout.addView(submitTime, 4);
         }
     };
 

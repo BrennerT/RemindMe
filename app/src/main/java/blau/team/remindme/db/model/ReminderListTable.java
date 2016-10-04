@@ -11,9 +11,9 @@ import static android.R.id.primary;
  * Created by Torben on 30.09.2016.
  */
 
-public class ReminderList extends RealmObject {
+public class ReminderListTable extends RealmObject {
     @PrimaryKey
-    private int list_id;
+    private String list_id;
     private int interval;
     private boolean active;
     private String name;
@@ -47,11 +47,11 @@ public class ReminderList extends RealmObject {
         this.setting = setting;
     }
 
-    public int getList_id() {
+    public String getList_id() {
         return list_id;
     }
 
-    public void setList_id(int list_id) {
+    public void setList_id(String list_id) {
         this.list_id = list_id;
     }
 

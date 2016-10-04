@@ -24,23 +24,23 @@ public class SettingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_setting);
     }
 
-    View.OnClickListener vToggleButtonPressed= new View.OnClickListener(){
+    View.OnClickListener vToggleButtonPressed = new View.OnClickListener() {
         @Override
-        public void onClick(View v){
+        public void onClick(View v) {
 
         }
     };
 
-    View.OnClickListener sToggleButtonPressed= new View.OnClickListener(){
+    View.OnClickListener sToggleButtonPressed = new View.OnClickListener() {
         @Override
-        public void onClick(View v){
+        public void onClick(View v) {
 
         }
     };
 
-    View.OnClickListener gpsSetterPressed= new View.OnClickListener(){
+    View.OnClickListener gpsSetterPressed = new View.OnClickListener() {
         @Override
-        public void onClick(View v){
+        public void onClick(View v) {
 
         }
     };

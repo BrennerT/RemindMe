@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         archiveButton.setOnClickListener(archiveButtonPressed);
     }
 
-    View.OnClickListener addButtonPressed = new View.OnClickListener(){
+    View.OnClickListener addButtonPressed = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Intent changeActivityAdd = new Intent(getApplicationContext(), AddActivity.class);
@@ -42,35 +42,35 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    View.OnClickListener settingsButtonPressed = new View.OnClickListener(){
+    View.OnClickListener settingsButtonPressed = new View.OnClickListener() {
         @Override
-        public void onClick(View v){
+        public void onClick(View v) {
             Intent changeActivitySettings = new Intent(getApplicationContext(), SettingActivity.class);
             startActivity(changeActivitySettings);
         }
     };
 
-    View.OnClickListener archiveButtonPressed = new View.OnClickListener(){
+    View.OnClickListener archiveButtonPressed = new View.OnClickListener() {
         @Override
-        public void onClick(View v){
-            Intent changeActivityArchive = new Intent(getApplicationContext(),ArchiveActivity.class);
+        public void onClick(View v) {
+            Intent changeActivityArchive = new Intent(getApplicationContext(), ArchiveActivity.class);
             startActivity(changeActivityArchive);
         }
     };
 
-    public void onSwipeLeft(){
+    public void onSwipeLeft() {
 
     }
 
-    public void onSwipeRight(){
+    public void onSwipeRight() {
 
     }
 
-    public List<ReminderList> getStandardList(){
+    public List<ReminderList> getStandardList() {
         return null;
     }
 
-    public List<ReminderList> getTempList(){
+    public List<ReminderList> getTempList() {
         return null;
     }
 

@@ -11,17 +11,17 @@ import io.realm.annotations.PrimaryKey;
 
 public class Settings extends RealmObject {
     @PrimaryKey
-    private int settings_id;
+    private String settings_id;
     private boolean vibration;
     private boolean sound;
     // Ist das an dieser Stelle so in Ordnung? Es sollten Maximal 4 Locations abgespeichert werden.
     private Location[] locations;
 
-    public int getSettings_id() {
+    public String getSettings_id() {
         return settings_id;
     }
 
-    public void setSettings_id(int settings_id) {
+    public void setSettings_id(String settings_id) {
         this.settings_id = settings_id;
     }
 

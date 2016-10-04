@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:id="@+id/changeDateButton"
-                android:text="change date"/>
+                android:text="change date" />
 
         </LinearLayout>
 
@@ -65,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:id="@+id/changeTimeButton"
-                android:text="change time"/>
+                android:text="change time" />
 
         </LinearLayout>
 

@@ -22,14 +22,14 @@ public class ArchiveActivity extends AppCompatActivity {
         setContentView(R.layout.activity_archive);
     }
 
-    public View.OnClickListener restoreButtonPressed = new View.OnClickListener(){
+    public View.OnClickListener restoreButtonPressed = new View.OnClickListener() {
         @Override
-        public void onClick(View v){
+        public void onClick(View v) {
 
         }
     };
 
-    public List<ReminderList> getDeactiveLists(){
+    public List<ReminderList> getDeactiveLists() {
         return null;
     }
 

@@ -14,14 +14,14 @@ import static android.R.attr.id;
 
 public class ReminderElement extends RealmObject {
     @PrimaryKey
-    private int element_id;
+    private String element_id;
     private String name;
 
-    public int getElement_Id() {
+    public String getElement_Id() {
         return element_id;
     }
 
-    public void setElement_Id(int element_id) {
+    public void setElement_Id(String element_id) {
         this.element_id = element_id;
     }
 

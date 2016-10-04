@@ -14,15 +14,15 @@ import io.realm.annotations.PrimaryKey;
 
 public class Termin extends RealmObject {
     @PrimaryKey
-    private int termin_id;
+    private String termin_id;
     private Date date;
     private Time beginTime, endTime;
 
-    public int getTermin_id() {
+    public String getTermin_id() {
         return termin_id;
     }
 
-    public void setTermin_id(int termin_id) {
+    public void setTermin_id(String termin_id) {
         this.termin_id = termin_id;
     }
 
