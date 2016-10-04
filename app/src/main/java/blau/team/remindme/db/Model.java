@@ -2,41 +2,30 @@ package blau.team.remindme.db;
 
 import java.util.List;
 
+import blau.team.remindme.db.model.ReminderList;
+
 /**
  * Created by Torben on 28.09.2016.
+ * Edited on 04.10.2016 by Torben
+ * changes: - now uses Singleton Pattern
+ *          - implemented reload method
  */
 
 public class Model {
+    private static Model instance;
     private DBAdapter dbAd;
-    private List<ReminderList> list;
-    private List<String> settings;
+    private List<ReminderList> lists;
 
     public void reload(){
-
+        dbAd = new DBAdapter();
+        lists = dbAd.getAllLists();
     }
 
-    public DBAdapter getDbAd() {
-        return dbAd;
+    public Model getInstance(){
+        if(Model.instance == null){
+            instance =  new Model();
+        }
+        return Model.instance;
     }
-
-    public void setDbAd(DBAdapter dbAd) {
-        this.dbAd = dbAd;
-    }
-
-    public List<ReminderList> getList() {
-        return list;
-    }
-
-    public void setList(List<ReminderList> list) {
-        this.list = list;
-    }
-
-    public List<String> getSettings() {
-        return settings;
-    }
-
-    public void setSettings(List<String> settings) {
-        this.settings = settings;
-    };
 
 }
