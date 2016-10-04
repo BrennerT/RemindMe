@@ -3,6 +3,7 @@ package blau.team.remindme.db.model;
 import android.support.v7.widget.LinearLayoutCompat;
 
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Date;
 
 import io.realm.RealmObject;
@@ -15,8 +16,7 @@ import io.realm.annotations.PrimaryKey;
 public class Termin extends RealmObject {
     @PrimaryKey
     private String termin_id;
-    private Date date;
-    private Time beginTime, endTime;
+    private Date beginDate, endDate;
 
     public String getTermin_id() {
         return termin_id;
@@ -26,27 +26,20 @@ public class Termin extends RealmObject {
         this.termin_id = termin_id;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getBeginDate() {
+        return beginDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setBeginDate(Date beginDate) {
+        this.beginDate = beginDate;
     }
 
-    public Time getBeginTime() {
-        return beginTime;
+    public Date getEndDate() {
+        return endDate;
     }
 
-    public void setBeginTime(Time beginTime) {
-        this.beginTime = beginTime;
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
-    public Time getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Time endTime) {
-        this.endTime = endTime;
-    }
 }
