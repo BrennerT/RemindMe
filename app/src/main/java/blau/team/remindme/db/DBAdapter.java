@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import blau.team.remindme.SettingActivity;
+import blau.team.remindme.db.model.GPSPoint;
 import blau.team.remindme.db.model.ReminderElement;
 import blau.team.remindme.db.model.ReminderList;
 import blau.team.remindme.db.model.Settings;
@@ -72,13 +73,13 @@ public class DBAdapter {
      *  Created by Torben on 04.10.2016
      *  Creates a new entry in table Settings
      */
-    public void addSetting(boolean sound, boolean vibration, Location[] locations){
+    public void addSetting(boolean sound, boolean vibration, RealmList<GPSPoint> corners){
         realm.beginTransaction();
         Settings setting = realm.createObject(Settings.class);
         setting.setSettings_id(UUID.randomUUID().toString());
         setting.setSound(sound);
         setting.setVibration(vibration);
-        setting.setLocations(locations);
+        setting.setCorners(corners);
         realm.commitTransaction();
     }
 
@@ -94,6 +95,19 @@ public class DBAdapter {
         termin.setEndDate(endDate);
         realm.commitTransaction();
     }
+
+    /*
+     *  Created by Torben on 05.10.2016
+     *  Creates a new GPS Point
+     */
+    public void addGPSPoint(long latitude, long longitude){
+        realm.beginTransaction();
+        GPSPoint point = realm.createObject(GPSPoint.class);
+        point.setLatitude(latitude);
+        point.setLongitude(longitude);
+        realm.commitTransaction();
+    }
+
 
     /*
      *  Created by Torben on 04.10.2016

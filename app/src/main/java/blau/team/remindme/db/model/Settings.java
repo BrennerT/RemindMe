@@ -2,6 +2,8 @@ package blau.team.remindme.db.model;
 
 import android.location.Location;
 
+import blau.team.remindme.notifier.GPSSquare;
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -14,8 +16,7 @@ public class Settings extends RealmObject {
     private String settings_id;
     private boolean vibration;
     private boolean sound;
-    // Ist das an dieser Stelle so in Ordnung? Es sollten Maximal 4 Locations abgespeichert werden.
-    private Location[] locations;
+    private RealmList<GPSPoint> corners;
 
     public String getSettings_id() {
         return settings_id;
@@ -41,11 +42,11 @@ public class Settings extends RealmObject {
         this.sound = sound;
     }
 
-    public Location[] getLocations() {
-        return locations;
+    public RealmList<GPSPoint> getCorners() {
+        return corners;
     }
 
-    public void setLocations(Location[] locations) {
-        this.locations = locations;
+    public void setCorners(RealmList<GPSPoint> corners) {
+        this.corners = corners;
     }
 }
