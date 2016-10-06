@@ -4,24 +4,19 @@ import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-import static android.R.attr.name;
-import static android.R.id.primary;
-
 /**
  * Created by Torben on 30.09.2016.
  */
 
 public class ReminderList extends RealmObject {
     @PrimaryKey
-    private String list_id;
+    private String listId;
     private int interval;
     private boolean active;
     private String name;
     // 1 to n relations to ReminderElement and Termin
     private RealmList<ReminderElement> elements;
     private RealmList<Termin> termins;
-    // 1 to 1 relation to settings
-    private Settings setting;
 
     public RealmList<ReminderElement> getElements() {
         return elements;
@@ -39,20 +34,12 @@ public class ReminderList extends RealmObject {
         this.termins = termins;
     }
 
-    public Settings getSetting() {
-        return setting;
+    public String getListId() {
+        return listId;
     }
 
-    public void setSetting(Settings setting) {
-        this.setting = setting;
-    }
-
-    public String getList_id() {
-        return list_id;
-    }
-
-    public void setList_id(String list_id) {
-        this.list_id = list_id;
+    public void setListId(String listId) {
+        this.listId = listId;
     }
 
     public int getInterval() {
@@ -78,4 +65,5 @@ public class ReminderList extends RealmObject {
     public void setName(String name) {
         this.name = name;
     }
+
 }

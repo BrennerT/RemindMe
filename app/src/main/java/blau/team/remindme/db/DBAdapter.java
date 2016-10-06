@@ -1,14 +1,9 @@
 package blau.team.remindme.db;
 
-import android.location.Location;
-
-import java.sql.Time;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
-import blau.team.remindme.SettingActivity;
 import blau.team.remindme.db.model.GPSPoint;
 import blau.team.remindme.db.model.ReminderElement;
 import blau.team.remindme.db.model.ReminderList;
@@ -18,8 +13,6 @@ import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmResults;
 
-import static android.R.attr.end;
-import static android.R.attr.id;
 import static android.media.CamcorderProfile.get;
 
 /**
@@ -35,7 +28,7 @@ public class DBAdapter {
      *  Searches for List with same id in Database and returns the first found list.
      */
     public ReminderList getListById(String id){
-        RealmResults<ReminderList> result = realm.where(ReminderList.class).equalTo("list_id", id).findAll();
+        RealmResults<ReminderList> result = realm.where(ReminderList.class).equalTo("listId", id).findAll();
         ReminderList resultList = result.get(0);
         return resultList;
     }
@@ -44,42 +37,52 @@ public class DBAdapter {
      *  Created by Torben on 04.10.2016
      *  Takes the Data of the parameters and creates an entry in Table ReminderList
      */
-    public void addList(int interval, boolean active, String name, RealmList<ReminderElement> elements, RealmList<Termin> termins, Settings setting){
+    public String addList(ReminderList list, RealmList<ReminderElement> elements, RealmList<Termin> termins){
         realm.beginTransaction();
-        ReminderList list = realm.createObject(ReminderList.class);
-        list.setList_id(UUID.randomUUID().toString());
-        list.setName(name);
-        list.setActive(active);
-        list.setInterval(interval);
-        list.setElements(elements);
-        list.setTermins(termins);
-        list.setSetting(setting);
+        ReminderList listRealm = realm.createObject(ReminderList.class);
+        String uuid = UUID.randomUUID().toString();
+        list.setListId(uuid);
+        listRealm.setName(list.getName());
+        listRealm.setInterval(list.getInterval());
+        listRealm.setActive(list.isActive());
+        listRealm.setElements(elements);
+        listRealm.setTermins(termins);
         realm.commitTransaction();
+        return uuid;
     }
 
     /*
      *  Created by Torben on 04.10.2016
      *  Creates a new entry in Table ReminderElement
      */
-    public void addElement(String name){
+    public String addElement(String name){
         realm.beginTransaction();
         ReminderElement element = realm.createObject(ReminderElement.class);
-        element.setElement_Id(UUID.randomUUID().toString());
+        String uuid = UUID.randomUUID().toString();
+        element.setElementId(uuid);
         element.setName(name);
         realm.commitTransaction();
+        return uuid;
     }
 
     /*
      *  Created by Torben on 04.10.2016
-     *  Creates a new entry in table Settings
+     *  Overrides the current Settings in Database
      */
-    public void addSetting(boolean sound, boolean vibration, RealmList<GPSPoint> corners){
+    public void changeSetting(boolean sound, boolean vibration, RealmList<GPSPoint> corners){
         realm.beginTransaction();
-        Settings setting = realm.createObject(Settings.class);
-        setting.setSettings_id(UUID.randomUUID().toString());
-        setting.setSound(sound);
-        setting.setVibration(vibration);
-        setting.setCorners(corners);
+        if(realm.where(Settings.class).findFirst().equals(null)){
+            Settings setting = realm.createObject(Settings.class);
+            setting.setSound(sound);
+            setting.setVibration(vibration);
+            setting.setCorners(corners);
+        }else{
+            Settings setting = realm.where(Settings.class).findFirst();
+            setting.setSound(sound);
+            setting.setVibration(vibration);
+            setting.setCorners(corners);
+        }
+
         realm.commitTransaction();
     }
 
@@ -90,7 +93,7 @@ public class DBAdapter {
     public void addTermin(Date beginDate, Date endDate){
         realm.beginTransaction();
         Termin termin = realm.createObject(Termin.class);
-        termin.setTermin_id(UUID.randomUUID().toString());
+        termin.setTerminId(UUID.randomUUID().toString());
         termin.setBeginDate(beginDate);
         termin.setEndDate(endDate);
         realm.commitTransaction();
@@ -128,13 +131,5 @@ public class DBAdapter {
         result.deleteFromRealm(0);
         realm.commitTransaction();
     }
-
-
-    // Diese sollten mit den aktuellen Methoden nicht notwendig sein
-//    public List<String> getSettings(){
-//        return null;
-//    }
-//
-//    public void setSettings(){
 
     }

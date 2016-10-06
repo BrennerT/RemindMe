@@ -21,7 +21,7 @@ public class Model {
         lists = dbAd.getAllLists();
     }
 
-    public Model getInstance(){
+    public static Model getInstance(){
         if(Model.instance == null){
             instance =  new Model();
         }

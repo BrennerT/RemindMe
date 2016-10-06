@@ -1,9 +1,5 @@
 package blau.team.remindme.db.model;
 
-import android.support.v7.widget.LinearLayoutCompat;
-
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.util.Date;
 
 import io.realm.RealmObject;
@@ -15,15 +11,15 @@ import io.realm.annotations.PrimaryKey;
 
 public class Termin extends RealmObject {
     @PrimaryKey
-    private String termin_id;
+    private String terminId;
     private Date beginDate, endDate;
 
-    public String getTermin_id() {
-        return termin_id;
+    public String getTerminId() {
+        return terminId;
     }
 
-    public void setTermin_id(String termin_id) {
-        this.termin_id = termin_id;
+    public void setTerminId(String terminId) {
+        this.terminId = terminId;
     }
 
     public Date getBeginDate() {
