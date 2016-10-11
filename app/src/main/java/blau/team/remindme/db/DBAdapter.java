@@ -67,27 +67,6 @@ public class DBAdapter {
 
     /*
      *  Created by Torben on 04.10.2016
-     *  Overrides the current Settings in Database
-     */
-    public void changeSetting(boolean sound, boolean vibration, RealmList<GPSPoint> corners){
-        realm.beginTransaction();
-        if(realm.where(Settings.class).findFirst().equals(null)){
-            Settings setting = realm.createObject(Settings.class);
-            setting.setSound(sound);
-            setting.setVibration(vibration);
-            setting.setCorners(corners);
-        }else{
-            Settings setting = realm.where(Settings.class).findFirst();
-            setting.setSound(sound);
-            setting.setVibration(vibration);
-            setting.setCorners(corners);
-        }
-
-        realm.commitTransaction();
-    }
-
-    /*
-     *  Created by Torben on 04.10.2016
      *  Creates a new entry in table Termin
      */
     public void addTermin(Date beginDate, Date endDate){
@@ -130,6 +109,36 @@ public class DBAdapter {
         RealmResults<ReminderList> result = realm.where(ReminderList.class).equalTo("list_id",id).findAll();
         result.deleteFromRealm(0);
         realm.commitTransaction();
+    }
+
+
+    /*
+     *  Created by Torben on 04.10.2016
+     *  Overrides the current Settings in Database
+     */
+    public void changeSetting(boolean sound, boolean vibration, RealmList<GPSPoint> corners){
+        realm.beginTransaction();
+        if(realm.where(Settings.class).findFirst().equals(null)){
+            Settings setting = realm.createObject(Settings.class);
+            setting.setSound(sound);
+            setting.setVibration(vibration);
+            setting.setCorners(corners);
+        }else{
+            Settings setting = realm.where(Settings.class).findFirst();
+            setting.setSound(sound);
+            setting.setVibration(vibration);
+            setting.setCorners(corners);
+        }
+        realm.commitTransaction();
+    }
+
+    /*
+     * Created by Torben on 11.10.2016
+     * Gets the Settings from Database
+     */
+    public Settings getSettings(){
+        Settings result = realm.where(Settings.class).findFirst();
+        return result;
     }
 
     }

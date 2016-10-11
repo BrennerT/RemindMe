@@ -3,6 +3,7 @@ package blau.team.remindme.db;
 import java.util.List;
 
 import blau.team.remindme.db.model.ReminderList;
+import blau.team.remindme.db.model.Settings;
 
 /**
  * Created by Torben on 28.09.2016.
@@ -14,22 +15,16 @@ import blau.team.remindme.db.model.ReminderList;
 public class Model {
     private static Model instance;
     private DBAdapter dbAd;
-    private List<String> settings;
+    private Settings settings;
 
     private List<ReminderList> lists;
 
-    public List<String> getSettings() {
-        return settings;
-    }
-
-    public void setSettings(List<String> settings) {
-        this.settings = settings;
-    }
-
-
-
     public List<ReminderList> getLists() {
         return dbAd.getAllLists();
+    }
+
+    public Settings getSettings() {
+        return settings;
     }
 
     public void setLists(List<ReminderList> lists) {
@@ -38,6 +33,7 @@ public class Model {
     public void reload(){
         dbAd = new DBAdapter();
         lists = dbAd.getAllLists();
+        settings = dbAd.getSettings();
     }
 
     public static Model getInstance(){

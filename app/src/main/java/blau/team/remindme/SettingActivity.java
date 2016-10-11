@@ -11,6 +11,7 @@ import blau.team.remindme.db.Model;
 
 import static android.R.attr.mode;
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
+import static android.media.CamcorderProfile.get;
 
 public class SettingActivity extends AppCompatActivity {
 
@@ -28,6 +29,8 @@ public class SettingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
+        
+
         model = Model.getInstance();
         vb.setOnClickListener(vSwitchPressed);
         sb.setOnClickListener(sSwitchPressed);
@@ -37,11 +40,11 @@ public class SettingActivity extends AppCompatActivity {
         gpsSetter4.setOnClickListener(gpsSetterPressed);
 
         //Laden der letzten Einstellungen
-        vb.setEnabled(Boolean.valueOf(model.getSettings().get(0)));
-        sb.setEnabled(Boolean.valueOf(model.getSettings().get(1)));
+        vb.setEnabled(Boolean.valueOf(model.getSettings().isVibration()));
+        sb.setEnabled(Boolean.valueOf(model.getSettings().isSound()));
         for (int i =0; i < 4; i++){
-            gps[i].setAltitude(Double.valueOf(model.getSettings().get(i+1)));
-            gps[i].setLongitude(Double.valueOf(model.getSettings().get(i+1)));
+            gps[i].setLatitude(Double.valueOf(model.getSettings().getCorners().get(i+1).getLatitude()));
+            gps[i].setLongitude(Double.valueOf(model.getSettings().getCorners().get(i+1).getLongitude()));
         }
     }
 
