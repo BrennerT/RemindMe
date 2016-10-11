@@ -34,6 +34,8 @@ public class AddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
+        model = Model.getInstance();
+
         linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
 
         modeSwitch = (Switch) findViewById(R.id.modeSwitch);
@@ -66,6 +68,7 @@ public class AddActivity extends AppCompatActivity {
     public View.OnClickListener addButtonPressed = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+
             Intent changeActivityMain = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(changeActivityMain);
         }

@@ -1,13 +1,18 @@
 package blau.team.remindme;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import blau.team.remindme.db.Model;
 import blau.team.remindme.db.model.ReminderList;
@@ -24,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        model = Model.getInstance();
 
         addButton = (Button) findViewById(R.id.addButton);
         settingsButton = (Button) findViewById(R.id.settingsButton);
@@ -67,11 +74,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public List<ReminderList> getStandardList() {
-        return null;
+        List<ReminderList> standards = new ArrayList<>();
+        for (ReminderList r : model.getLists()) {
+            if (r.getInterval() != 0) {
+                standards.add(r);
+            }
+        }
+        return standards;
     }
 
     public List<ReminderList> getTempList() {
-        return null;
+        List<ReminderList> temps = new ArrayList<>();
+        for (ReminderList r : model.getLists()) {
+            if (r.getInterval() == 0) {
+                temps.add(r);
+            }
+        }
+        return temps;
     }
 
     public TableLayout getTemp() {
