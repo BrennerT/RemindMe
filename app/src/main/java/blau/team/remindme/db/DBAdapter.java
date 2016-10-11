@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import blau.team.remindme.MainActivity;
 import blau.team.remindme.db.model.GPSPoint;
 import blau.team.remindme.db.model.ReminderElement;
 import blau.team.remindme.db.model.ReminderList;
@@ -21,7 +22,11 @@ import static android.media.CamcorderProfile.get;
 
 public class DBAdapter {
 
-    private Realm realm = Realm.getDefaultInstance();
+    private Realm realm;
+
+    public DBAdapter(){
+        realm = Realm.getDefaultInstance();
+    }
 
     /*
      *  Created by Torben on 04.10.2016

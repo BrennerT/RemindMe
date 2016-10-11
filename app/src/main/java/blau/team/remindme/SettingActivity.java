@@ -29,9 +29,15 @@ public class SettingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
-        
-
         model = Model.getInstance();
+
+        vb = (Switch) findViewById(R.id.vibration);
+        sb = (Switch) findViewById(R.id.sound);
+        gpsSetter1 = (Button) findViewById(R.id.corner1);
+        gpsSetter2 = (Button) findViewById(R.id.corner2);
+        gpsSetter3 = (Button) findViewById(R.id.corner3);
+        gpsSetter4 = (Button) findViewById(R.id.corner4);
+
         vb.setOnClickListener(vSwitchPressed);
         sb.setOnClickListener(sSwitchPressed);
         gpsSetter1.setOnClickListener(gpsSetterPressed);
@@ -40,11 +46,13 @@ public class SettingActivity extends AppCompatActivity {
         gpsSetter4.setOnClickListener(gpsSetterPressed);
 
         //Laden der letzten Einstellungen
-        vb.setEnabled(Boolean.valueOf(model.getSettings().isVibration()));
-        sb.setEnabled(Boolean.valueOf(model.getSettings().isSound()));
-        for (int i =0; i < 4; i++){
-            gps[i].setLatitude(Double.valueOf(model.getSettings().getCorners().get(i+1).getLatitude()));
-            gps[i].setLongitude(Double.valueOf(model.getSettings().getCorners().get(i+1).getLongitude()));
+        if(model.getSettings() != null){
+            vb.setEnabled(Boolean.valueOf(model.getSettings().isVibration()));
+            sb.setEnabled(Boolean.valueOf(model.getSettings().isSound()));
+            for (int i =0; i < 4; i++){
+                gps[i].setLatitude(Double.valueOf(model.getSettings().getCorners().get(i+1).getLatitude()));
+                gps[i].setLongitude(Double.valueOf(model.getSettings().getCorners().get(i+1).getLongitude()));
+            }
         }
     }
 
