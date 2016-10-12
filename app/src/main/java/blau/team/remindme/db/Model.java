@@ -16,31 +16,36 @@ public class Model {
     private static Model instance;
     private DBAdapter dbAd;
     private Settings settings;
-
     private List<ReminderList> lists;
-
-    public List<ReminderList> getLists() {
-        return dbAd.getAllLists();
-    }
-
-    public Settings getSettings() {
-        return settings;
-    }
-
-    public void setLists(List<ReminderList> lists) {
-        this.lists = lists;
-    }
-    public void reload(){
-        dbAd = new DBAdapter();
-        lists = dbAd.getAllLists();
-        settings = dbAd.getSettings();
-    }
 
     public static Model getInstance(){
         if(Model.instance == null){
             instance =  new Model();
         }
         return Model.instance;
+    }
+
+    public void reload(){
+        dbAd = new DBAdapter();
+        lists = dbAd.getAllLists();
+        settings = dbAd.getSettings();
+    }
+
+    public List<ReminderList> getLists() {
+        return dbAd.getAllLists();
+
+    }
+
+    public void setLists(List<ReminderList> lists) {
+        this.lists = lists;
+    }
+
+    public Settings getSettings() {
+        return settings;
+    }
+
+    public void setSettings(Settings settings){
+        this.settings = settings;
     }
 
 }

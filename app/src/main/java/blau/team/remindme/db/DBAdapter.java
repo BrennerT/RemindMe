@@ -15,6 +15,7 @@ import io.realm.RealmList;
 import io.realm.RealmResults;
 
 import static android.media.CamcorderProfile.get;
+import static blau.team.remindme.R.id.sound;
 
 /**
  * Created by Torben on 28.09.2016.
@@ -40,58 +41,50 @@ public class DBAdapter {
 
     /*
      *  Created by Torben on 04.10.2016
-     *  Takes the Data of the parameters and creates an entry in Table ReminderList
+     *  Copy ReminderList into Database and return UUID as String
      */
-    public String addList(ReminderList list, RealmList<ReminderElement> elements, RealmList<Termin> termins){
+    public String addList(ReminderList list){
         realm.beginTransaction();
-        ReminderList listRealm = realm.createObject(ReminderList.class);
+        ReminderList listRealm = realm.copyToRealm(list);
         String uuid = UUID.randomUUID().toString();
-        list.setListId(uuid);
-        listRealm.setName(list.getName());
-        listRealm.setInterval(list.getInterval());
-        listRealm.setActive(list.isActive());
-        listRealm.setElements(elements);
-        listRealm.setTermins(termins);
+        listRealm.setListId(uuid);
         realm.commitTransaction();
         return uuid;
     }
 
     /*
      *  Created by Torben on 04.10.2016
-     *  Creates a new entry in Table ReminderElement
+     *  Copy ReminderElement into Database and return UUID as String
      */
-    public String addElement(String name){
+    public String addElement(ReminderElement element){
         realm.beginTransaction();
-        ReminderElement element = realm.createObject(ReminderElement.class);
+        ReminderElement realmElement = realm.copyToRealm(element);
         String uuid = UUID.randomUUID().toString();
-        element.setElementId(uuid);
-        element.setName(name);
+        realmElement.setElementId(uuid);
         realm.commitTransaction();
         return uuid;
     }
 
     /*
      *  Created by Torben on 04.10.2016
-     *  Creates a new entry in table Termin
+     *  Copy Termin into Dabase and returns UUID
      */
-    public void addTermin(Date beginDate, Date endDate){
+    public String addTermin(Termin termin){
         realm.beginTransaction();
-        Termin termin = realm.createObject(Termin.class);
-        termin.setTerminId(UUID.randomUUID().toString());
-        termin.setBeginDate(beginDate);
-        termin.setEndDate(endDate);
+        Termin realmTermin = realm.copyToRealm(termin);
+        String uuid = UUID.randomUUID().toString();
+        realmTermin.setTerminId(uuid);
         realm.commitTransaction();
+        return uuid;
     }
 
     /*
      *  Created by Torben on 05.10.2016
      *  Creates a new GPS Point
      */
-    public void addGPSPoint(long latitude, long longitude){
+    public void addGPSPoint(GPSPoint point){
         realm.beginTransaction();
-        GPSPoint point = realm.createObject(GPSPoint.class);
-        point.setLatitude(latitude);
-        point.setLongitude(longitude);
+        GPSPoint realmPoint = realm.copyToRealm(point);
         realm.commitTransaction();
     }
 
@@ -111,7 +104,7 @@ public class DBAdapter {
      */
     public void deleteList(String id){
         realm.beginTransaction();
-        RealmResults<ReminderList> result = realm.where(ReminderList.class).equalTo("list_id",id).findAll();
+        RealmResults<ReminderList> result = realm.where(ReminderList.class).equalTo("listId",id).findAll();
         result.deleteFromRealm(0);
         realm.commitTransaction();
     }
@@ -121,18 +114,13 @@ public class DBAdapter {
      *  Created by Torben on 04.10.2016
      *  Overrides the current Settings in Database
      */
-    public void changeSetting(boolean sound, boolean vibration, RealmList<GPSPoint> corners){
+    public void changeSetting(Settings setting){
         realm.beginTransaction();
-        if(realm.where(Settings.class).findFirst().equals(null)){
-            Settings setting = realm.createObject(Settings.class);
-            setting.setSound(sound);
-            setting.setVibration(vibration);
-            setting.setCorners(corners);
+        if(realm.where(Settings.class).findAll().isEmpty()){
+            Settings realmSetting = realm.copyToRealm(setting);
         }else{
-            Settings setting = realm.where(Settings.class).findFirst();
-            setting.setSound(sound);
-            setting.setVibration(vibration);
-            setting.setCorners(corners);
+            Settings realmSetting = realm.where(Settings.class).findFirst();
+            realmSetting = setting;
         }
         realm.commitTransaction();
     }
@@ -142,8 +130,7 @@ public class DBAdapter {
      * Gets the Settings from Database
      */
     public Settings getSettings(){
-        Settings result = realm.where(Settings.class).findFirst();
-        return result;
+        return realm.where(Settings.class).findFirst();
     }
 
     }
