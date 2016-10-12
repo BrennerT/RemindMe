@@ -32,10 +32,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Realm.init(this);
+        Realm.init(getApplicationContext());
 
         model = Model.getInstance();
-
         model.reload();
 
         addButton = (Button) findViewById(R.id.addButton);

@@ -1,5 +1,7 @@
 package blau.team.remindme.db;
 
+import android.content.Context;
+
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -11,6 +13,7 @@ import blau.team.remindme.db.model.ReminderList;
 import blau.team.remindme.db.model.Settings;
 import blau.team.remindme.db.model.Termin;
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import io.realm.RealmList;
 import io.realm.RealmResults;
 
@@ -26,7 +29,12 @@ public class DBAdapter {
     private Realm realm;
 
     public DBAdapter(){
-        realm = Realm.getDefaultInstance();
+
+        RealmConfiguration config = new RealmConfiguration.Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build();
+
+        realm = Realm.getInstance(config);
     }
 
     /*
