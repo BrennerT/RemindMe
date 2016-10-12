@@ -18,6 +18,19 @@ public class ReminderList extends RealmObject {
     private RealmList<ReminderElement> elements;
     private RealmList<Termin> termins;
 
+    public ReminderList(String listId, int interval, boolean active, String name, RealmList<Termin> termins, RealmList<ReminderElement> elements) {
+        this.listId = listId;
+        this.interval = interval;
+        this.active = active;
+        this.name = name;
+        this.termins = termins;
+        this.elements = elements;
+    }
+
+    public ReminderList(){
+
+    }
+
     public RealmList<ReminderElement> getElements() {
         return elements;
     }

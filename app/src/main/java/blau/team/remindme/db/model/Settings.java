@@ -16,6 +16,16 @@ public class Settings extends RealmObject {
     private boolean sound;
     private RealmList<GPSPoint> corners;
 
+    public Settings(boolean sound, boolean vibration, RealmList<GPSPoint> corners ) {
+        this.sound = sound;
+        //TODO: Convert Array of Location to RealmList of GPSPoints
+        this.corners = corners;
+        this.vibration = vibration;
+    }
+    public Settings(){
+
+    }
+
     public boolean isVibration() {
         return vibration;
     }

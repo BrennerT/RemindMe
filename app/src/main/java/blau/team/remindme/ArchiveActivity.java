@@ -35,9 +35,7 @@ public class ArchiveActivity extends AppCompatActivity {
 
     public void restoreList (ReminderList rl){
         rl.setActive(true);
-        List<ReminderList> all = model.getLists();
-        all.get(Integer.valueOf(rl.getList_id())).setActive(true);
-        model.setLists(all);
+        model.addList(rl);
     }
 
     public List<ReminderList> getInactiveLists() {

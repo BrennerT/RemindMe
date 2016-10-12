@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.Switch;
 
 import blau.team.remindme.db.Model;
+import blau.team.remindme.db.model.Settings;
 
 import static android.R.attr.mode;
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
@@ -37,11 +38,11 @@ public class SettingActivity extends AppCompatActivity {
         gpsSetter4.setOnClickListener(gpsSetterPressed);
 
         //Laden der letzten Einstellungen
-        vb.setEnabled(Boolean.valueOf(model.getSettings().get(0)));
-        sb.setEnabled(Boolean.valueOf(model.getSettings().get(1)));
+        vb.setEnabled(Boolean.valueOf(model.getSettings().isVibration()));
+        sb.setEnabled(Boolean.valueOf(model.getSettings().isSound()));
         for (int i =0; i < 4; i++){
-            gps[i].setAltitude(Double.valueOf(model.getSettings().get(i+1)));
-            gps[i].setLongitude(Double.valueOf(model.getSettings().get(i+1)));
+            gps[i].setLatitude(Double.valueOf(model.getSettings().getCorners().get(i).getLatitude()));
+            gps[i].setLongitude(Double.valueOf(model.getSettings().getCorners().get(i).getLongitude()));
         }
     }
 
@@ -101,6 +102,6 @@ public class SettingActivity extends AppCompatActivity {
     {
         super.onDestroy();
         //Updaten der DB
-        //model.setSettings();
+        //model.setSettings(new Settings(this.getSound(),this.getVibration(),this.getGps()));
     }
 }
