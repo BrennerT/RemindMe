@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.Switch;
 
 import blau.team.remindme.db.Model;
+import blau.team.remindme.db.model.Settings;
 
 import static android.R.attr.mode;
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
@@ -112,6 +113,6 @@ public class SettingActivity extends AppCompatActivity {
     {
         super.onDestroy();
         //Updaten der DB
-        //model.setSettings();
+        //model.setSettings(new Settings(this.getSound(),this.getVibration(),this.getGps()));
     }
 }
