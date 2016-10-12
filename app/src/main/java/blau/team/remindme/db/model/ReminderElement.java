@@ -17,6 +17,14 @@ public class ReminderElement extends RealmObject {
     private String elementId;
     private String name;
 
+    public ReminderElement(String name) {
+        this.name = name;
+    }
+
+    public ReminderElement(){
+
+    }
+
     public String getElementId() {
         return elementId;
     }

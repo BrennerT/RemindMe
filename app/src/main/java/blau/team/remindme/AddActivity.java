@@ -17,6 +17,7 @@ import java.util.List;
 import blau.team.remindme.db.Model;
 import blau.team.remindme.db.model.ReminderList;
 
+import static android.R.attr.name;
 import static android.R.attr.start;
 
 public class AddActivity extends AppCompatActivity {
@@ -29,9 +30,10 @@ public class AddActivity extends AppCompatActivity {
     private DatePicker dp;
     private TimePicker tp;
     private Model model;
-    private Date dateInput;
-    private String timeInput;
+    private Date dateBeginInput, dateEndInput;
     private List<String> elementInput;
+    private int intervalInput;
+    private String nameInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +77,8 @@ public class AddActivity extends AppCompatActivity {
     public View.OnClickListener addButtonPressed = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(timeInput != null && dateInput != null &&  !elementInput.isEmpty()){
-                model.addList(timeInput, dateInput, elementInput);
+            if(dateBeginInput != null && dateEndInput != null &&  !elementInput.isEmpty() && nameInput != null){
+                model.addList(intervalInput,dateBeginInput,dateEndInput, nameInput, elementInput);
             }
             else{
                 //TODO: Notification about missing input
@@ -137,4 +139,39 @@ public class AddActivity extends AppCompatActivity {
             linearLayout.removeView(submitTime);
         }
     };
+
+    // Getter and Setter section
+
+
+    public Date getDateBeginInput() {
+        return dateBeginInput;
+    }
+
+    public void setDateBeginInput(Date dateBeginInput) {
+        this.dateBeginInput = dateBeginInput;
+    }
+
+    public Date getDateEndInput() {
+        return dateEndInput;
+    }
+
+    public void setDateEndInput(Date dateEndInput) {
+        this.dateEndInput = dateEndInput;
+    }
+
+    public List<String> getElementInput() {
+        return elementInput;
+    }
+
+    public void setElementInput(List<String> elementInput) {
+        this.elementInput = elementInput;
+    }
+
+    public int getIntervalInput() {
+        return intervalInput;
+    }
+
+    public void setIntervalInput(int intervalInput) {
+        this.intervalInput = intervalInput;
+    }
 }

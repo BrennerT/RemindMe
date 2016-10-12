@@ -26,6 +26,7 @@ public class Settings extends RealmObject {
         this.corners = realmCorners;
         this.vibration = vibration;
     }
+
     public Settings(){
 
     }

@@ -1,5 +1,7 @@
 package blau.team.remindme.db.model;
 
+import java.util.List;
+
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -16,15 +18,18 @@ public class ReminderList extends RealmObject {
     private String name;
     // 1 to n relations to ReminderElement and Termin
     private RealmList<ReminderElement> elements;
-    private RealmList<Termin> termins;
+    private Termin termin;
 
-    public ReminderList(String listId, int interval, boolean active, String name, RealmList<Termin> termins, RealmList<ReminderElement> elements) {
-        this.listId = listId;
+    public ReminderList(int interval, boolean active, String name, Termin termin, List<ReminderElement> elements) {
         this.interval = interval;
         this.active = active;
         this.name = name;
-        this.termins = termins;
-        this.elements = elements;
+        this.termin = termin;
+        RealmList<ReminderElement> realmElementList = new RealmList<>();
+        for (ReminderElement e: elements) {
+            realmElementList.add(e);
+        }
+        this.elements = realmElementList;
     }
 
     public ReminderList(){
@@ -39,12 +44,12 @@ public class ReminderList extends RealmObject {
         this.elements = elements;
     }
 
-    public RealmList<Termin> getTermins() {
-        return termins;
+    public Termin getTermins() {
+        return termin;
     }
 
-    public void setTermins(RealmList<Termin> termins) {
-        this.termins = termins;
+    public void setTermins(Termin termin) {
+        this.termin = termin;
     }
 
     public String getListId() {

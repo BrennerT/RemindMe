@@ -18,6 +18,7 @@ import blau.team.remindme.db.Model;
 import blau.team.remindme.db.model.ReminderList;
 import blau.team.remindme.notifier.Notifier;
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         Realm.init(this);
 
         model = Model.getInstance();
+
         model.reload();
 
         addButton = (Button) findViewById(R.id.addButton);

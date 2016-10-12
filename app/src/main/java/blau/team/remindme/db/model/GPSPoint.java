@@ -15,6 +15,10 @@ public class GPSPoint extends RealmObject {
         this.longitude = longitude;
     }
 
+    public GPSPoint(){
+
+    }
+
     public double getLatitude() {
         return latitude;
     }

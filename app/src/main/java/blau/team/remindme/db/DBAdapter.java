@@ -46,6 +46,10 @@ public class DBAdapter {
     public String addList(ReminderList list){
         realm.beginTransaction();
         ReminderList listRealm = realm.copyToRealm(list);
+        for (ReminderElement e: list.getElements()) {
+            addElement(e);
+        }
+        addTermin(list.getTermins());
         String uuid = UUID.randomUUID().toString();
         listRealm.setListId(uuid);
         realm.commitTransaction();

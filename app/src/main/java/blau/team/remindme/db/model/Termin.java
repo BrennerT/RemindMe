@@ -14,6 +14,15 @@ public class Termin extends RealmObject {
     private String terminId;
     private Date beginDate, endDate;
 
+    public Termin(Date beginDate, Date endDate) {
+        this.beginDate = beginDate;
+        this.endDate = endDate;
+    }
+
+    public Termin(){
+
+    }
+
     public String getTerminId() {
         return terminId;
     }
