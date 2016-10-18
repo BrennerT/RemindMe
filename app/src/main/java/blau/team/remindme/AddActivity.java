@@ -122,4 +122,5 @@ public class AddActivity extends AppCompatActivity {
             linearLayout.removeView(submitTime);
         }
     };
+
 }
