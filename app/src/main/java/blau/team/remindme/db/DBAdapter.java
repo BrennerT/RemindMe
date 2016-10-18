@@ -29,12 +29,13 @@ public class DBAdapter {
     private Realm realm;
 
     public DBAdapter(){
+//        RealmConfiguration config = new RealmConfiguration.Builder()
+//                .deleteRealmIfMigrationNeeded()
+//                .build();
 
-        RealmConfiguration config = new RealmConfiguration.Builder()
-                .deleteRealmIfMigrationNeeded()
-                .build();
+//        realm = Realm.getInstance(config);
 
-        realm = Realm.getInstance(config);
+        realm = Realm.getDefaultInstance();
     }
 
     /*
