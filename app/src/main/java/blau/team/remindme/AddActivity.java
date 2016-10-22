@@ -7,10 +7,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TimePicker;
 
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,6 +36,7 @@ public class AddActivity extends AppCompatActivity {
     private TimePicker tp;
     private Model model;
     private Date dateBeginInput, dateEndInput;
+    private EditText et1, et2, et3, dt1, dt2, tt1, tt2;
     private List<String> elementInput;
     private int intervalInput;
     private String nameInput;
@@ -55,6 +61,16 @@ public class AddActivity extends AppCompatActivity {
         addButton.setOnClickListener(addButtonPressed);
         changeDateButton.setOnClickListener(changeDateButtonPressed);
         changeTimeButton.setOnClickListener(changeTimeButtonPressed);
+
+        et1 = (EditText) findViewById(R.id.editText1);
+        et2 = (EditText) findViewById(R.id.editText2);
+        et3 = (EditText) findViewById(R.id.editText3);
+        dt1 = (EditText) findViewById(R.id.dateText1);
+        dt2 = (EditText) findViewById(R.id.dateText2);
+        tt1 = (EditText) findViewById(R.id.timeText1);
+        tt2 = (EditText) findViewById(R.id.timeText2);
+
+        mode = false;
     }
 
     public Boolean getMode() {
@@ -71,13 +87,54 @@ public class AddActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             toggleMode();
+            // true ist enspricht dem Anlegen einer Standardliste, false dem Anlegen einer Temporären Liste
+            if (mode == true){
+                modeSwitch.setText("Standard");
+            } else {
+                modeSwitch.setText("Temporär");
+            }
         }
     };
+
+    public Date convertToDate(String s){
+        //Konvertieren des User Date & Zeit Inputs zu einem Datum
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yy HH:mm");
+        try {
+            Date date = format.parse(s);
+            System.out.println(date);
+            return date;
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public View.OnClickListener addButtonPressed = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            //Element-Input des Users in Liste packen
+            List<String> elements = new ArrayList<>();
+            elements.add(et1.getText().toString());
+            elements.add(et2.getText().toString());
+            elements.add(et3.getText().toString());
+            elementInput = elements;
+
+            //Name-Input noch nicht implementiert
+            nameInput = "Test";
+
+            // Konvertieren des Inputs zu Daten
+            dateBeginInput = convertToDate(dt1.getText().toString() + ' '+ tt1.getText().toString());
+            dateEndInput = convertToDate(dt2.getText().toString() + ' '+ tt2.getText().toString());
+
+            //Standard-Modus Intervall = 7 , Temporär-Modus Intervall = 0
+            if (mode == true){
+                intervalInput = 7;
+            } else { intervalInput = 0; }
+
+            //Prüfung auf leere Eingaben
             if(dateBeginInput != null && dateEndInput != null &&  !elementInput.isEmpty() && nameInput != null){
+                // HInzufügen der ReminderListe zur DB
                 model.addList(intervalInput,dateBeginInput,dateEndInput, nameInput, elementInput);
             }
             else{
@@ -85,8 +142,8 @@ public class AddActivity extends AppCompatActivity {
             }
             Intent changeActivityMain = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(changeActivityMain);
-        }
-    };
+}
+};
 
     public View.OnClickListener changeDateButtonPressed = new View.OnClickListener() {
         @Override
@@ -98,8 +155,8 @@ public class AddActivity extends AppCompatActivity {
             submitDate.setText("Submit Date");
             submitDate.setOnClickListener(onSubmitDate);
 
-            linearLayout.addView(dp, 2);
-            linearLayout.addView(submitDate, 3);
+            linearLayout.addView(dp, 3);
+            linearLayout.addView(submitDate, 4);
 
         }
     };
@@ -125,8 +182,8 @@ public class AddActivity extends AppCompatActivity {
             submitTime.setText("Submit Time");
             submitTime.setOnClickListener(onSubmitTime);
 
-            linearLayout.addView(tp, 3);
-            linearLayout.addView(submitTime, 4);
+            linearLayout.addView(tp, 4);
+            linearLayout.addView(submitTime, 5);
         }
     };
 
