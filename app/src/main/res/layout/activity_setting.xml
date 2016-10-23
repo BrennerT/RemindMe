@@ -21,21 +21,27 @@
         <Switch
             android:text="Sound"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0px"
             android:id="@+id/sound"
             android:layout_weight="1" />
 
         <Switch
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0px"
             android:id="@+id/vibration"
             android:layout_weight="1"
             android:text="Vibration" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="2"
+            android:text="Set GPS Points:"/>
+
         <GridLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.25"
+            android:layout_height="0px"
+            android:layout_weight="6"
             android:id="@+id/gridLayout">
 
             <Button
