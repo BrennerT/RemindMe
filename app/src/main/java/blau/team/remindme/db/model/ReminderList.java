@@ -12,7 +12,7 @@ import io.realm.annotations.PrimaryKey;
 
 public class ReminderList extends RealmObject {
     @PrimaryKey
-    private String listId;
+    private long id;
     private int interval;
     private boolean active;
     private String name;
@@ -52,12 +52,12 @@ public class ReminderList extends RealmObject {
         this.termin = termin;
     }
 
-    public String getListId() {
-        return listId;
+    public long getId() {
+        return id;
     }
 
-    public void setListId(String listId) {
-        this.listId = listId;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public int getInterval() {

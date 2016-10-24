@@ -1,12 +1,7 @@
 package blau.team.remindme.db.model;
 
 import io.realm.RealmObject;
-import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
-
-import static android.R.attr.elegantTextHeight;
-import static android.R.attr.fragmentSharedElementEnterTransition;
-import static android.R.attr.id;
 
 /**
  * Created by Torben on 30.09.2016.
@@ -14,7 +9,7 @@ import static android.R.attr.id;
 
 public class ReminderElement extends RealmObject {
     @PrimaryKey
-    private String elementId;
+    private long id;
     private String name;
 
     public ReminderElement(String name) {
@@ -25,12 +20,12 @@ public class ReminderElement extends RealmObject {
 
     }
 
-    public String getElementId() {
-        return elementId;
+    public long getId() {
+        return id;
     }
 
-    public void setElementId(String element_id) {
-        this.elementId = element_id;
+    public void setId(long element_id) {
+        this.id = element_id;
     }
 
     public String getName() {

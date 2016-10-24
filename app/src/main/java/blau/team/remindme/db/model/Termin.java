@@ -11,7 +11,7 @@ import io.realm.annotations.PrimaryKey;
 
 public class Termin extends RealmObject {
     @PrimaryKey
-    private String terminId;
+    private long id;
     private Date beginDate, endDate;
 
     public Termin(Date beginDate, Date endDate) {
@@ -23,12 +23,12 @@ public class Termin extends RealmObject {
 
     }
 
-    public String getTerminId() {
-        return terminId;
+    public long getId() {
+        return id;
     }
 
-    public void setTerminId(String terminId) {
-        this.terminId = terminId;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public Date getBeginDate() {

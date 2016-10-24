@@ -1,7 +1,6 @@
 package blau.team.remindme.db;
 
 import java.util.List;
-import java.util.UUID;
 
 import blau.team.remindme.db.model.GPSPoint;
 import blau.team.remindme.db.model.ReminderElement;
@@ -9,8 +8,10 @@ import blau.team.remindme.db.model.ReminderList;
 import blau.team.remindme.db.model.Settings;
 import blau.team.remindme.db.model.Termin;
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 
+import static android.R.attr.id;
 import static android.media.CamcorderProfile.get;
 
 /**
@@ -20,15 +21,20 @@ import static android.media.CamcorderProfile.get;
 public class DBAdapter {
 
     private Realm realm;
+    private IDGenerator listIdGenerator,elementIdGenerator,terminIdGenerator;
 
     public DBAdapter(){
 //        RealmConfiguration config = new RealmConfiguration.Builder()
 //                .deleteRealmIfMigrationNeeded()
 //                .build();
-
+//
 //        realm = Realm.getInstance(config);
 
         realm = Realm.getDefaultInstance();
+
+        listIdGenerator = new IDGenerator(realm,"List");
+        elementIdGenerator = new IDGenerator(realm,"Element");
+        terminIdGenerator = new IDGenerator(realm,"Termin");
     }
 
     /*
@@ -45,47 +51,37 @@ public class DBAdapter {
      *  Created by Torben on 04.10.2016
      *  Copy ReminderList into Database and return UUID as String
      */
-    public String addList(ReminderList list){
+    public long addList(ReminderList list){
         for (ReminderElement e: list.getElements()) {
             createIdElement(e);
         }
         createIdTermin(list.getTermins());
-        String uuid;
-        do {
-            uuid = UUID.randomUUID().toString();
-        }while(realm.where(ReminderList.class).equalTo("listId", uuid).count()!=0);
-        list.setListId(uuid);
+        long id = listIdGenerator.getID();
+        list.setId(id);
         realm.beginTransaction();
         realm.copyToRealm(list);
         realm.commitTransaction();
-
-        return uuid;
+        return id;
     }
 
     /*
      *  Created by Torben on 04.10.2016
      *  Copy ReminderElement into Database and return UUID as String
      */
-    public String createIdElement(ReminderElement element){
-        String uuid;
-        do {
-            uuid = UUID.randomUUID().toString();
-        }while(realm.where(ReminderElement.class).equalTo("elementId", uuid).count()!=0);
-        element.setElementId(uuid);
-        return uuid;
+    public long createIdElement(ReminderElement element){
+        long id = elementIdGenerator.getID();
+        element.setId(id);
+        return id;
     }
 
     /*
      *  Created by Torben on 04.10.2016
-     *  Copy Termin into Dabase and returns UUID
+     *  creates an id for a termin object
      */
-    public String createIdTermin(Termin termin){
-        String uuid;
-        do {
-            uuid = UUID.randomUUID().toString();
-        }while(realm.where(Termin.class).equalTo("terminId", uuid).count()!=0);
-        termin.setTerminId(uuid);
-        return uuid;
+    public long createIdTermin(Termin termin){
+        long id = terminIdGenerator.getID();
+        termin.setId(id);
+        return id;
     }
 
     /*
