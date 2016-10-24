@@ -84,15 +84,16 @@ public class DBAdapter {
         return id;
     }
 
+    // Laut aktuellem Kenntnisstand nicht benötigt da sobald die Settings geändert werden automatisch die GPS Points gesetzt werden
     /*
      *  Created by Torben on 05.10.2016
      *  Creates a new GPS Point
      */
-    public void addGPSPoint(GPSPoint point){
-        realm.beginTransaction();
-        realm.copyToRealm(point);
-        realm.commitTransaction();
-    }
+//    public void addGPSPoint(GPSPoint point){
+//        realm.beginTransaction();
+//        realm.copyToRealm(point);
+//        realm.commitTransaction();
+//    }
 
 
     /*

@@ -42,12 +42,20 @@ public class Model {
         settings = dbAd.getSettings();
     }
 
+    /**
+     * Gets the current Settings from the database
+     * @return
+     */
     public Settings getSettings() {
-        return settings;
+        return dbAd.getSettings();
     }
 
-    public void setSettings(Settings settings) {
-        this.settings = settings;
+    /**
+     * Updates Settings in Database
+     * @param setting
+     */
+    public void setSettings(Settings setting) {
+        dbAd.changeSetting(setting);
     }
 
     public void addList (int interval, Date beginDate, Date endDate, String name, List<String> elements){
@@ -66,8 +74,9 @@ public class Model {
         this.reload();
     }
 
+    // TODO: implement Method deleteList
     public void deleteList(ReminderList rl){
-        //Method to delete ReminderLists
+        //Method to delete
     }
 
     public List<ReminderList> getLists() {
