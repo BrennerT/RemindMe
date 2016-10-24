@@ -67,7 +67,8 @@ public class Model {
     }
 
     public void deleteList(ReminderList rl){
-        //Method to delete ReminderLists
+        dbAd.deleteList(rl.getId());
+        this.reload();
     }
 
     public List<ReminderList> getLists() {

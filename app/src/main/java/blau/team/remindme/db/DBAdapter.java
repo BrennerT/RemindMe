@@ -24,11 +24,11 @@ public class DBAdapter {
     private IDGenerator listIdGenerator,elementIdGenerator,terminIdGenerator;
 
     public DBAdapter(){
-//        RealmConfiguration config = new RealmConfiguration.Builder()
+//RealmConfiguration config = new RealmConfiguration.Builder()
 //                .deleteRealmIfMigrationNeeded()
 //                .build();
-//
-//        realm = Realm.getInstance(config);
+
+  //     realm = Realm.getInstance(config);
 
         realm = Realm.getDefaultInstance();
 
@@ -108,9 +108,9 @@ public class DBAdapter {
      *  Created by Torben on 04.10.2016
      *  Deletes the first List found for one ID
      */
-    public void deleteList(String id){
+    public void deleteList(long id){
         realm.beginTransaction();
-        RealmResults<ReminderList> result = realm.where(ReminderList.class).equalTo("listId",id).findAll();
+        RealmResults<ReminderList> result = realm.where(ReminderList.class).equalTo("id",id).findAll();
         result.deleteFromRealm(0);
         realm.commitTransaction();
     }

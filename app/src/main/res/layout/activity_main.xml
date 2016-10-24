@@ -17,14 +17,123 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true">
 
-        <FrameLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
+            android:layout_height="match_parent"
             android:layout_weight="0.75">
 
-        </FrameLayout>
+            <TextView
+                android:text="Temporäre Listen"
+                android:layout_width="match_parent"
+                android:layout_height="31dp"
+                android:id="@+id/textView"
+                android:textStyle="normal|bold"
+                android:textSize="18sp" />
+
+            <TableLayout
+                android:layout_height="182dp"
+                android:id="@+id/temp"
+                android:layout_width="match_parent">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                    <TextView
+                        android:text="Name"
+                        android:id="@+id/textView11"
+                        android:textAlignment="viewStart"
+                        android:textStyle="normal|bold"
+                        android:layout_width="50dp"
+                        android:layout_height="25dp" />
+
+                    <TextView
+                        android:text="Element 1"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView10"
+                        android:textAlignment="viewStart"
+                        android:layout_width="70dp" />
+
+                    <TextView
+                        android:text="Element 2"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView12"
+                        android:textAlignment="viewStart"
+                        android:layout_width="70dp" />
+
+                    <TextView
+                        android:text="Element 3"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView13"
+                        android:textAlignment="viewStart"
+                        android:layout_width="70dp" />
+
+                    <TextView
+                        android:text="Datum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView14" />
+
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+                android:text="Standard Listen"
+                android:layout_width="match_parent"
+                android:layout_height="31dp"
+                android:id="@+id/textView15"
+                android:textSize="18sp"
+                android:textStyle="normal|bold" />
+
+            <TableLayout
+                android:layout_height="match_parent"
+                android:id="@+id/standard"
+                android:layout_width="match_parent">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:text="Name"
+                        android:id="@+id/textView16"
+                        android:textAlignment="viewStart"
+                        android:textStyle="normal|bold"
+                        android:layout_width="50dp"
+                        android:layout_height="25dp" />
+
+                    <TextView
+                        android:text="Element 1"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView17"
+                        android:textAlignment="viewStart"
+                        android:layout_width="70dp" />
+
+                    <TextView
+                        android:text="Element 2"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView18"
+                        android:textAlignment="viewStart"
+                        android:layout_width="70dp" />
+
+                    <TextView
+                        android:text="Element 3"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView19"
+                        android:textAlignment="viewStart"
+                        android:layout_width="70dp" />
+
+                    <TextView
+                        android:text="Datum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView20" />
+
+                </TableRow>
+            </TableLayout>
+
+        </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
