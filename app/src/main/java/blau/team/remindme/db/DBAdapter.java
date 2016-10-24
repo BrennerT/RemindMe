@@ -124,6 +124,7 @@ public class DBAdapter {
     public void changeSetting(Settings setting){
         realm.beginTransaction();
         if(realm.where(Settings.class).findAll().isEmpty()){
+            setting.setId(1);
             realm.copyToRealm(setting);
         }else{
             realm.copyToRealmOrUpdate(setting);
