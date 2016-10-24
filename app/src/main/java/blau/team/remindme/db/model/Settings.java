@@ -12,6 +12,8 @@ import io.realm.annotations.PrimaryKey;
  */
 
 public class Settings extends RealmObject {
+    @PrimaryKey
+    private int id;
     private boolean vibration;
     private boolean sound;
     private RealmList<GPSPoint> corners;
@@ -25,6 +27,14 @@ public class Settings extends RealmObject {
 
     public Settings(){
 
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public boolean isVibration() {
