@@ -36,7 +36,7 @@ public class AddActivity extends AppCompatActivity {
     private TimePicker tp;
     private Model model;
     private Date dateBeginInput, dateEndInput;
-    private EditText et1, et2, et3, dt1, dt2, tt1, tt2;
+    private EditText et1, et2, et3, dt1, dt2, tt1, tt2, en;
     private List<String> elementInput;
     private int intervalInput;
     private String nameInput;
@@ -69,6 +69,7 @@ public class AddActivity extends AppCompatActivity {
         dt2 = (EditText) findViewById(R.id.dateText2);
         tt1 = (EditText) findViewById(R.id.timeText1);
         tt2 = (EditText) findViewById(R.id.timeText2);
+        en = (EditText) findViewById(R.id.editName);
 
         mode = false;
     }
@@ -120,8 +121,8 @@ public class AddActivity extends AppCompatActivity {
             elements.add(et3.getText().toString());
             elementInput = elements;
 
-            //Name-Input noch nicht implementiert
-            nameInput = "Test";
+            //Name-Input
+            nameInput = en.getText().toString();
 
             // Konvertieren des Inputs zu Daten
             dateBeginInput = convertToDate(dt1.getText().toString() + ' '+ tt1.getText().toString());

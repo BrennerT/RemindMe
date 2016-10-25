@@ -1,20 +1,27 @@
 package blau.team.remindme;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
 import blau.team.remindme.db.Model;
+import blau.team.remindme.db.model.ReminderElement;
 import blau.team.remindme.db.model.ReminderList;
 import blau.team.remindme.notifier.Notifier;
 import io.realm.Realm;
@@ -26,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private TableLayout temp, standard;
     private Model model;
     private Notifier notifier;
+    SimpleDateFormat format = new SimpleDateFormat("dd.MM.yy");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +49,15 @@ public class MainActivity extends AppCompatActivity {
         settingsButton = (Button) findViewById(R.id.settingsButton);
         archiveButton = (Button) findViewById(R.id.archiveButton);
 
+        temp = (TableLayout) findViewById(R.id.temp);
+        standard = (TableLayout) findViewById(R.id.standard);
+
         addButton.setOnClickListener(addButtonPressed);
         settingsButton.setOnClickListener(settingsButtonPressed);
         archiveButton.setOnClickListener(archiveButtonPressed);
+
+        showLists(getTempList(),1);
+        showLists(getStandardList(),0);
     }
 
     View.OnClickListener addButtonPressed = new View.OnClickListener() {
@@ -76,6 +90,37 @@ public class MainActivity extends AppCompatActivity {
 
     public void onSwipeRight() {
 
+    }
+    public void showLists(List<ReminderList> tempLists, int mode){
+        for (ReminderList l: tempLists) {
+            //Erstellen der einer neuen Reihe für die Liste
+            TableRow row = new TableRow(MainActivity.this);
+
+            //Textausgabe für den Namen der Liste
+            TextView name = new TextView(MainActivity.this);
+            name.setText(l.getName());
+            row.addView(name);
+
+            //Textausgabe der einzelnen Elemente
+            for (ReminderElement e: l.getElements()) {
+                TextView elementName = new TextView(MainActivity.this);
+                elementName.setText(e.getName());
+                row.addView(elementName);
+            }
+
+            //Textausgabe für Beginndatum
+            TextView datum = new TextView(MainActivity.this);
+            Date begin = null;
+            datum.setText(format.format(l.getTermins().getBeginDate()));
+            row.addView(datum);
+            row.setClickable(true);
+            row.setBackgroundColor(Color.LTGRAY);
+            //Auskommentieren, wenn alle Listen gelöscht werden sollen
+            //model.deleteList(l);
+            if(mode ==1) {
+                temp.addView(row);
+            } else {standard.addView(row);}
+        }
     }
 
     public List<ReminderList> getStandardList() {

@@ -20,11 +20,30 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true">
 
-        <Switch
-            android:text="Temporär"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/modeSwitch" />
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text="Name"
+                android:ems="10"
+                android:id="@+id/editName"
+                android:layout_weight="1" />
+
+            <Switch
+                android:text="Temporär"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/modeSwitch"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-medium"
+                android:textAlignment="center" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
