@@ -49,6 +49,7 @@ public class RVAdapterKlasse extends RecyclerView.Adapter<RVAdapterKlasse.ViewHo
                 /*switch(i){
                     case 0: //was passieren soll wenn man raufklickt
                         break;
+
                     case 1: //
                         break;
                 }*/
