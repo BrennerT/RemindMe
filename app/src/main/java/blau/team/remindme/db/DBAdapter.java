@@ -24,7 +24,7 @@ public class DBAdapter {
     private IDGenerator listIdGenerator,elementIdGenerator,terminIdGenerator;
 
     public DBAdapter(){
-//RealmConfiguration config = new RealmConfiguration.Builder()
+//      RealmConfiguration config = new RealmConfiguration.Builder()
 //                .deleteRealmIfMigrationNeeded()
 //                .build();
 //
