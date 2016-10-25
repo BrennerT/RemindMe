@@ -115,8 +115,8 @@ public class MainActivity extends AppCompatActivity {
             row.addView(datum);
             row.setClickable(true);
             row.setBackgroundColor(Color.LTGRAY);
-            //Auskommentieren, wenn alle Listen gelöscht werden sollen
-            //model.deleteList(l);
+//            Auskommentieren, wenn alle Listen gelöscht werden sollen
+//            model.deleteList(l);
             if(mode ==1) {
                 temp.addView(row);
             } else {standard.addView(row);}

@@ -76,7 +76,7 @@ public class Model {
 
     // TODO: implement Method deleteList
     public void deleteList(ReminderList rl){
-        //Method to delete
+        dbAd.deleteList(rl);
     }
 
     public List<ReminderList> getLists() {

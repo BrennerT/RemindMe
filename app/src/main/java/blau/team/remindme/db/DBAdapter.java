@@ -27,8 +27,8 @@ public class DBAdapter {
 //RealmConfiguration config = new RealmConfiguration.Builder()
 //                .deleteRealmIfMigrationNeeded()
 //                .build();
-
-  //     realm = Realm.getInstance(config);
+//
+//       realm = Realm.getInstance(config);
 
         realm = Realm.getDefaultInstance();
 
@@ -109,10 +109,9 @@ public class DBAdapter {
      *  Created by Torben on 04.10.2016
      *  Deletes the first List found for one ID
      */
-    public void deleteList(long id){
+    public void deleteList(ReminderList rl){
         realm.beginTransaction();
-        RealmResults<ReminderList> result = realm.where(ReminderList.class).equalTo("id",id).findAll();
-        result.deleteFromRealm(0);
+        rl.deleteFromRealm();
         realm.commitTransaction();
     }
 
