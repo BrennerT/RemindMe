@@ -4,49 +4,48 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TableLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import blau.team.remindme.db.Model;
-import blau.team.remindme.db.ReminderList;
+import blau.team.remindme.db.model.ReminderList;
 
 public class ArchiveActivity extends AppCompatActivity {
 
-    private Boolean vibration, sound;
     private List<Button> restoreButtons;
     private Model model;
+    private TableLayout inactive;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_archive);
+
+        model = Model.getInstance();
     }
 
-    public View.OnClickListener restoreButtonPressed = new View.OnClickListener(){
+    public View.OnClickListener restoreButtonPressed = new View.OnClickListener() {
         @Override
-        public void onClick(View v){
+        public void onClick(View v) {
 
         }
     };
 
-    public List<ReminderList> getDeactiveLists(){
-        return null;
+    public void restoreList (ReminderList rl){
+        rl.setActive(true);
+        model.addList(rl);
     }
 
-    public Boolean getVibration() {
-        return vibration;
-    }
-
-    public void setVibration(Boolean vibration) {
-        this.vibration = vibration;
-    }
-
-    public Boolean getSound() {
-        return sound;
-    }
-
-    public void setSound(Boolean sound) {
-        this.sound = sound;
+    public List<ReminderList> getInactiveLists() {
+        List<ReminderList> inactive = new ArrayList<>();
+        for (ReminderList r : model.getLists()) {
+            if (r.isActive() == false) {
+                inactive.add(r);
+            }
+        }
+        return inactive;
     }
 
     public List<Button> getRestoreButtons() {

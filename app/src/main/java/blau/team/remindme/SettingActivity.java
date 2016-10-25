@@ -1,50 +1,89 @@
 package blau.team.remindme;
 
+import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ToggleButton;
+import android.widget.Switch;
 
 import blau.team.remindme.db.Model;
+import blau.team.remindme.db.model.Settings;
 
 import static android.R.attr.mode;
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
+import static android.media.CamcorderProfile.get;
 
 public class SettingActivity extends AppCompatActivity {
 
     private Boolean vibration, sound;
-    private ToggleButton vb, sb;
-    private Button gpsSetter;
+    private Switch vb, sb;
+    private Button gpsSetter1;
+    private Button gpsSetter2;
+    private Button gpsSetter3;
+    private Button gpsSetter4;
     private Model model;
+    private Location[] gps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
+
+        model = Model.getInstance();
+
+        vb = (Switch) findViewById(R.id.vibration);
+        sb = (Switch) findViewById(R.id.sound);
+        gpsSetter1 = (Button) findViewById(R.id.corner1);
+        gpsSetter2 = (Button) findViewById(R.id.corner2);
+        gpsSetter3 = (Button) findViewById(R.id.corner3);
+        gpsSetter4 = (Button) findViewById(R.id.corner4);
+
+        vb.setOnClickListener(vSwitchPressed);
+        sb.setOnClickListener(sSwitchPressed);
+        gpsSetter1.setOnClickListener(gpsSetterPressed);
+        gpsSetter2.setOnClickListener(gpsSetterPressed);
+        gpsSetter3.setOnClickListener(gpsSetterPressed);
+        gpsSetter4.setOnClickListener(gpsSetterPressed);
+
+        //Laden der letzten Einstellungen
+        if(model.getSettings() != null){
+            vb.setEnabled(Boolean.valueOf(model.getSettings().isVibration()));
+            sb.setEnabled(Boolean.valueOf(model.getSettings().isSound()));
+            for (int i =0; i < 4; i++){
+                gps[i].setLatitude(Double.valueOf(model.getSettings().getCorners().get(i+1).getLatitude()));
+                gps[i].setLongitude(Double.valueOf(model.getSettings().getCorners().get(i+1).getLongitude()));
+            }
+        }
     }
 
-    View.OnClickListener vToggleButtonPressed= new View.OnClickListener(){
+    View.OnClickListener vSwitchPressed = new View.OnClickListener() {
         @Override
-        public void onClick(View v){
-
+        public void onClick(View v) {
+            SettingActivity.this.setVibration(!getVibration());
         }
     };
 
-    View.OnClickListener sToggleButtonPressed= new View.OnClickListener(){
+    View.OnClickListener sSwitchPressed = new View.OnClickListener() {
         @Override
-        public void onClick(View v){
-
+        public void onClick(View v) {
+            SettingActivity.this.setSound(!getSound());
         }
     };
 
-    View.OnClickListener gpsSetterPressed= new View.OnClickListener(){
+    View.OnClickListener gpsSetterPressed = new View.OnClickListener() {
         @Override
-        public void onClick(View v){
-
+        public void onClick(View v) {
         }
     };
 
+    public Location[] getGps() {
+        return gps;
+    }
+
+    public void setGps(Location[] gps) {
+        this.gps = gps;
+    }
     public Boolean getVibration() {
         return vibration;
     }
@@ -67,5 +106,13 @@ public class SettingActivity extends AppCompatActivity {
 
     public void setModel(Model model) {
         this.model = model;
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        //Updaten der DB
+        //model.setSettings(new Settings(this.getSound(),this.getVibration(),this.getGps()));
     }
 }

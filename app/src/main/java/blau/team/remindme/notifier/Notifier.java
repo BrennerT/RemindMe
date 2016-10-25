@@ -10,9 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 import blau.team.remindme.db.Model;
-import blau.team.remindme.db.ReminderList;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
+import blau.team.remindme.db.model.ReminderList;
 
 public class Notifier extends Service {
 

@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import static blau.team.remindme.MainActivity.*;
+
 /**
  * Created by Adrian on 11.10.2016.
  */
@@ -42,7 +44,7 @@ public class RVAdapterKlasse extends RecyclerView.Adapter<RVAdapterKlasse.ViewHo
             @Override
             public void onClick(View v){
 
-             MainActivity.tv1.setText(MainActivity.itemTexte.get(i));
+             tv1.setText(MainActivity.itemTexte.get(i));
 
                 /*switch(i){
                     case 0: //was passieren soll wenn man raufklickt

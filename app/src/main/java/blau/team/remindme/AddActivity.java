@@ -12,8 +12,10 @@ import android.widget.Switch;
 import android.widget.TimePicker;
 
 import java.util.Date;
+import java.util.List;
 
 import blau.team.remindme.db.Model;
+import blau.team.remindme.db.model.ReminderList;
 
 import static android.R.attr.start;
 
@@ -23,16 +25,21 @@ public class AddActivity extends AppCompatActivity {
     private LinearLayout linearLayout;
     private Boolean mode;
     private Switch modeSwitch;
-//    private CalendarView calendar;
+    //    private CalendarView calendar;
     private DatePicker dp;
     private TimePicker tp;
     private Model model;
+    private Date dateInput;
+    private String timeInput;
+    private List<String> elementInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
+
+        model = Model.getInstance();
 
         linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
 
@@ -52,6 +59,8 @@ public class AddActivity extends AppCompatActivity {
         return this.mode;
     }
 
+    public void setMode(Boolean mode) { this.mode = mode;}
+
     public void toggleMode() {
         this.mode = !this.mode;
     }
@@ -66,6 +75,12 @@ public class AddActivity extends AppCompatActivity {
     public View.OnClickListener addButtonPressed = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            if(timeInput != null && dateInput != null &&  !elementInput.isEmpty()){
+                model.addList(timeInput, dateInput, elementInput);
+            }
+            else{
+                //TODO: Notification about missing input
+            }
             Intent changeActivityMain = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(changeActivityMain);
         }
@@ -82,7 +97,7 @@ public class AddActivity extends AppCompatActivity {
             submitDate.setOnClickListener(onSubmitDate);
 
             linearLayout.addView(dp, 2);
-            linearLayout.addView(submitDate,3);
+            linearLayout.addView(submitDate, 3);
 
         }
     };
@@ -108,8 +123,8 @@ public class AddActivity extends AppCompatActivity {
             submitTime.setText("Submit Time");
             submitTime.setOnClickListener(onSubmitTime);
 
-            linearLayout.addView(tp,3);
-            linearLayout.addView(submitTime,4);
+            linearLayout.addView(tp, 3);
+            linearLayout.addView(submitTime, 4);
         }
     };
 
