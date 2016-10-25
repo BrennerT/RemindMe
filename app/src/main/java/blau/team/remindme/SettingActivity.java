@@ -1,6 +1,7 @@
 package blau.team.remindme;
 
 import android.location.Location;
+import android.location.LocationManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.Switch;
 import blau.team.remindme.db.Model;
 import blau.team.remindme.db.model.GPSPoint;
 import blau.team.remindme.db.model.Settings;
+import blau.team.remindme.notifier.Notifier;
 import io.realm.Realm;
 import io.realm.RealmList;
 
@@ -29,6 +31,8 @@ public class SettingActivity extends AppCompatActivity {
     private Button gpsSetter4;
     private Model model;
     private Realm realm;
+    private Notifier notifier;
+    private LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,7 @@ public class SettingActivity extends AppCompatActivity {
 
         model = Model.getInstance();
         realm = Realm.getDefaultInstance();
+        notifier = new Notifier();
 
         vb = (Switch) findViewById(R.id.vibration);
         sb = (Switch) findViewById(sound);
@@ -57,7 +62,6 @@ public class SettingActivity extends AppCompatActivity {
 
         // if no settings are found make default settings
         if(settingInput == null) {
-            Log.d("| Entering default","");
             RealmList<GPSPoint> corners = new RealmList<>();
             for (int i = 0; i <= 3; i++) {
                 corners.add(new GPSPoint(0.0, 0.0));
@@ -65,10 +69,7 @@ public class SettingActivity extends AppCompatActivity {
             settingInput = new Settings(false, false, corners);
         }
 
-        Log.d("| settingInput:",settingInput.toString());
-
         // Update GUI
-        Log.d("| Value sound Property",String.valueOf(settingInput.isSound()));
         vb.setChecked(settingInput.isVibration());
         sb.setChecked(settingInput.isSound());
 
@@ -100,20 +101,36 @@ public class SettingActivity extends AppCompatActivity {
     View.OnClickListener gpsSetter1Pressed = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            Location location = notifier.getActualLocation();
+            realm.beginTransaction();
+            settingInput.getCorners().get(0).setLatitude(location.getLatitude());
+            settingInput.getCorners().get(0).setLongitude(location.getLongitude());
+            realm.commitTransaction();
+            gpsSetter1.setText(String.valueOf(settingInput.getCorners().get(0).getLatitude()) + "\n" + String.valueOf(settingInput.getCorners().get(0).getLongitude()));
         }
     };
 
     View.OnClickListener gpsSetter2Pressed = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            Location location = notifier.getActualLocation();
+            realm.beginTransaction();
+            settingInput.getCorners().get(1).setLatitude(location.getLatitude());
+            settingInput.getCorners().get(1).setLongitude(location.getLongitude());
+            realm.commitTransaction();
+            gpsSetter2.setText(String.valueOf(settingInput.getCorners().get(1).getLatitude()) + "\n" + String.valueOf(settingInput.getCorners().get(1).getLongitude()));
         }
     };
 
     View.OnClickListener gpsSetter3Pressed = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            Location location = notifier.getActualLocation();
+            realm.beginTransaction();
+            settingInput.getCorners().get(2).setLatitude(location.getLatitude());
+            settingInput.getCorners().get(2).setLongitude(location.getLongitude());
+            realm.commitTransaction();
+            gpsSetter3.setText(String.valueOf(settingInput.getCorners().get(2).getLatitude()) + "\n" + String.valueOf(settingInput.getCorners().get(2).getLongitude()));
 
         }
     };
@@ -121,7 +138,12 @@ public class SettingActivity extends AppCompatActivity {
     View.OnClickListener gpsSetter4Pressed = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            Location location = notifier.getActualLocation();
+            realm.beginTransaction();
+            settingInput.getCorners().get(3).setLatitude(location.getLatitude());
+            settingInput.getCorners().get(3).setLongitude(location.getLongitude());
+            realm.commitTransaction();
+            gpsSetter4.setText(String.valueOf(settingInput.getCorners().get(3).getLatitude()) + "\n" + String.valueOf(settingInput.getCorners().get(3).getLongitude()));
         }
     };
 
