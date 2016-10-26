@@ -5,7 +5,7 @@ import android.location.Location;
 /**
  * Created by Torben on 28.09.2016.
  */
-
+// TODO: Add funktionality of GPSSquare
 public class GPSSquare {
     private Location corner1, corner2, corner3, corner4;
 

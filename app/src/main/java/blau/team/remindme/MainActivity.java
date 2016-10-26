@@ -1,8 +1,11 @@
 package blau.team.remindme;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,6 +26,7 @@ import java.util.ListIterator;
 import blau.team.remindme.db.Model;
 import blau.team.remindme.db.model.ReminderElement;
 import blau.team.remindme.db.model.ReminderList;
+import blau.team.remindme.notifier.GPSLocator;
 import blau.team.remindme.notifier.Notifier;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -45,6 +49,10 @@ public class MainActivity extends AppCompatActivity {
         model = Model.getInstance();
         model.reload();
 
+        // GPSLocator must get the Context from MainActivity
+        GPSLocator.setmContext(this);
+        notifier = Notifier.getInstance();
+
         addButton = (Button) findViewById(R.id.addButton);
         settingsButton = (Button) findViewById(R.id.settingsButton);
         archiveButton = (Button) findViewById(R.id.archiveButton);
@@ -56,8 +64,23 @@ public class MainActivity extends AppCompatActivity {
         settingsButton.setOnClickListener(settingsButtonPressed);
         archiveButton.setOnClickListener(archiveButtonPressed);
 
+        // check if permission for location tracking is granted
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            //Permission needed
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS},1);
+        }
+
         showLists(getTempList(),1);
         showLists(getStandardList(),0);
+
     }
 
     View.OnClickListener addButtonPressed = new View.OnClickListener() {
