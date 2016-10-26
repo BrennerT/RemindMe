@@ -16,6 +16,11 @@ public class IDGenerator {
 
     private long count;
 
+    /**
+     * An Generator for ids for a given Class
+     * @param realm current Realm Instance
+     * @param classIdentifier   List -> the generator will search for ids in Reminderlist, Element, Termin
+     */
     public IDGenerator(Realm realm, String classIdentifier){
         count = getHighestIdDb(realm, classIdentifier)+1;
     }
@@ -37,7 +42,7 @@ public class IDGenerator {
     /**
      * finds Highest id in  the Database for a given Table.
      * @param realm current Realm Instance
-     * @param classIdentifier
+     * @param classIdentifier List -> the generator will search for ids in Reminderlist, Element, Termin
      * @return the id
      */
     private long getHighestIdDb(Realm realm, String classIdentifier){
