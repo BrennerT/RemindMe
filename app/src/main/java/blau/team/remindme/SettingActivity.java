@@ -161,5 +161,6 @@ public class SettingActivity extends AppCompatActivity {
         super.onDestroy();
         //Updaten der DB
         model.setSettings(settingInput);
+        finish();
     }
 }

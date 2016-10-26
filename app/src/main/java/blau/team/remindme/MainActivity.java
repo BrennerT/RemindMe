@@ -166,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
         return temps;
     }
 
+    // Getter and Setter Section
     public TableLayout getTemp() {
         return temp;
     }

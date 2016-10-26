@@ -1,5 +1,6 @@
 package blau.team.remindme;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +16,7 @@ import blau.team.remindme.db.model.ReminderList;
 public class ArchiveActivity extends AppCompatActivity {
 
     private List<Button> restoreButtons;
+    private Button backButton;
     private Model model;
     private TableLayout inactive;
 
@@ -48,6 +50,14 @@ public class ArchiveActivity extends AppCompatActivity {
         return inactive;
     }
 
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        finish();
+    }
+
+    // Getters and Setters section
     public List<Button> getRestoreButtons() {
         return restoreButtons;
     }
@@ -63,4 +73,7 @@ public class ArchiveActivity extends AppCompatActivity {
     public void setRestoreButtonPressed(View.OnClickListener restoreButtonPressed) {
         this.restoreButtonPressed = restoreButtonPressed;
     }
+
+
+
 }

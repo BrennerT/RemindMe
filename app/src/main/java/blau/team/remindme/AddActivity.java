@@ -128,14 +128,14 @@ public class AddActivity extends AppCompatActivity {
             dateBeginInput = convertToDate(dt1.getText().toString() + ' '+ tt1.getText().toString());
             dateEndInput = convertToDate(dt2.getText().toString() + ' '+ tt2.getText().toString());
 
-            //Standard-Modus Intervall = 7 , Temporär-Modus Intervall = 0
+            //Standard-Mode Intervall = 7 , Temporär-Mode Intervall = 0
             if (mode == true){
                 intervalInput = 7;
             } else { intervalInput = 0; }
 
-            //Prüfung auf leere Eingaben
+            //check if empty input
             if(dateBeginInput != null && dateEndInput != null &&  !elementInput.isEmpty() && nameInput != null){
-                // HInzufügen der ReminderListe zur DB
+                // Adding ReminderList to DB
                 model.addList(intervalInput,dateBeginInput,dateEndInput, nameInput, elementInput);
             }
             else{
@@ -143,7 +143,8 @@ public class AddActivity extends AppCompatActivity {
             }
             Intent changeActivityMain = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(changeActivityMain);
-}
+            finish();
+        }
 };
 
     public View.OnClickListener changeDateButtonPressed = new View.OnClickListener() {
