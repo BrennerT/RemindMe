@@ -24,6 +24,10 @@ public class DBAdapter {
     private IDGenerator listIdGenerator,elementIdGenerator,terminIdGenerator;
 
     public DBAdapter(){
+
+        //if Database structure changed this must be use to make database.
+        //will delete Old Database and make a new Database
+
 //      RealmConfiguration config = new RealmConfiguration.Builder()
 //                .deleteRealmIfMigrationNeeded()
 //                .build();
@@ -37,9 +41,10 @@ public class DBAdapter {
         terminIdGenerator = new IDGenerator(realm,"Termin");
     }
 
-    /*
+    /**
      *  Created by Torben on 04.10.2016
      *  Searches for List with same id in Database and returns the first found list.
+     *  @param id The id of the searched list
      */
     public ReminderList getListById(String id){
         RealmResults<ReminderList> result = realm.where(ReminderList.class).equalTo("listId", id).findAll();
@@ -47,26 +52,31 @@ public class DBAdapter {
         return resultList;
     }
 
-    /*
+    /**
      *  Created by Torben on 04.10.2016
-     *  Copy ReminderList into Database and return UUID as String
+     *  Save ReminderList in Database
+     *  @param list The list to save
      */
-    public long addList(ReminderList list){
+    public void addList(ReminderList list){
+        // create ids for elements in list
         for (ReminderElement e: list.getElements()) {
             createIdElement(e);
         }
+        // create id for termin in list
         createIdTermin(list.getTermins());
+        // create id for list
         long id = listIdGenerator.getID();
         list.setId(id);
         realm.beginTransaction();
+        // this also safes the termin and elements in database
         realm.copyToRealm(list);
         realm.commitTransaction();
-        return id;
     }
 
-    /*
+    /**
      *  Created by Torben on 04.10.2016
-     *  Copy ReminderElement into Database and return UUID as String
+     *  creates an id for a given element
+     *  @param element the element to give a new id
      */
     public long createIdElement(ReminderElement element){
         long id = elementIdGenerator.getID();
@@ -74,9 +84,10 @@ public class DBAdapter {
         return id;
     }
 
-    /*
+    /**
      *  Created by Torben on 04.10.2016
-     *  creates an id for a termin object
+     *  creates an id for a given termin object
+     *  @param termin the termin to give a new id
      */
     public long createIdTermin(Termin termin){
         long id = terminIdGenerator.getID();
@@ -84,7 +95,7 @@ public class DBAdapter {
         return id;
     }
 
-    /*
+    /**
      *  Created by Torben on 04.10.2016
      *  Returns all Lists in Database
      */
@@ -93,9 +104,10 @@ public class DBAdapter {
         return result;
     }
 
-    /*
+    /**
      *  Created by Torben on 04.10.2016
-     *  Deletes the first List found for one ID
+     *  Deletes the given list from database
+     *  @param rl list to delete
      */
     public void deleteList(ReminderList rl){
         realm.beginTransaction();
@@ -104,16 +116,19 @@ public class DBAdapter {
     }
 
 
-    /*
+    /**
      *  Created by Torben on 04.10.2016
      *  Overrides the current Settings in Database
+     *  @param setting The new settings object to copy in to database
      */
     public void changeSetting(Settings setting){
         realm.beginTransaction();
         if(realm.where(Settings.class).findAll().isEmpty()){
+            // if there is no setting in database write this new on into it and give it an id
             setting.setId(1);
             realm.copyToRealm(setting);
         }else{
+            // this overrides the object with the same id like setting
             realm.copyToRealmOrUpdate(setting);
         }
         realm.commitTransaction();
