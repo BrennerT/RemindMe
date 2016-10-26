@@ -24,6 +24,7 @@
             android:enabled="true"
             android:exported="true"></service>
     </application>
+    <!--get permissions for accessing Location-->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
 </manifest>
