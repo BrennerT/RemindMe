@@ -18,6 +18,12 @@ public class Settings extends RealmObject {
     private boolean sound;
     private RealmList<GPSPoint> corners;
 
+    /**
+     * Constructor with parameters.
+     * @param sound     true -> sound turned on     false -> sound turned off
+     * @param vibration  true -> vibration is on     false -> vibration is off
+     * @param corners   contains 4 GPSPoints which are the standard positions to check if user left
+     */
     public Settings(boolean sound, boolean vibration, RealmList<GPSPoint> corners ) {
         this.sound = sound;
         RealmList<GPSPoint> realmCorners = corners;
@@ -25,9 +31,15 @@ public class Settings extends RealmObject {
         this.vibration = vibration;
     }
 
+    /**
+     * Constructor with no parameters
+     * Needed by Realm
+     */
     public Settings(){
 
     }
+
+    // Getters and Setters section
 
     public int getId() {
         return id;

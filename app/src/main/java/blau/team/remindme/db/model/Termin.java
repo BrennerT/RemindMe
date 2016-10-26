@@ -14,14 +14,25 @@ public class Termin extends RealmObject {
     private long id;
     private Date beginDate, endDate;
 
+    /**
+     *  Constructor with parameters
+     * @param beginDate Start time to check if user leaves the area
+     * @param endDate End time to check if user leaves the area
+     */
     public Termin(Date beginDate, Date endDate) {
         this.beginDate = beginDate;
         this.endDate = endDate;
     }
 
+    /**
+     * Constructor with no parameters
+     * Needed by Realm
+     */
     public Termin(){
 
     }
+
+    // Getters and Setters section
 
     public long getId() {
         return id;
