@@ -19,8 +19,6 @@ import static android.R.id.list;
  * Edited on 04.10.2016 by Torben
  * changes: - now uses Singleton Pattern
  *          - implemented reload method
- *
- *  TODO: - Setter methods should update the database
  */
 
 public class Model {
@@ -29,6 +27,10 @@ public class Model {
     private Settings settings;
     private List<ReminderList> lists;
 
+    /**
+     * Returns the current instance of the Model
+     * @return
+     */
     public static Model getInstance(){
         if(Model.instance == null){
             instance =  new Model();
@@ -37,6 +39,9 @@ public class Model {
         return Model.instance;
     }
 
+    /**
+     * Reads the information from database again
+     */
     public void reload(){
         lists = dbAd.getAllLists();
         settings = dbAd.getSettings();
@@ -58,6 +63,14 @@ public class Model {
         dbAd.changeSetting(setting);
     }
 
+    /**
+     * Makes a new list out of the parameters and safes it to database
+     * @param interval
+     * @param beginDate
+     * @param endDate
+     * @param name
+     * @param elements
+     */
     public void addList (int interval, Date beginDate, Date endDate, String name, List<String> elements){
         // Update of the model
         List<ReminderElement> elementList = new ArrayList<>();
@@ -69,12 +82,19 @@ public class Model {
         dbAd.addList(list);
     }
 
+    /**
+     * saves a list in database
+     * @param rl the list to save
+     */
     public void addList(ReminderList rl){
         dbAd.addList(rl);
         this.reload();
     }
 
-    // TODO: implement Method deleteList
+    /**
+     * Deletes a list from Database
+     * @param rl list to delete
+     */
     public void deleteList(ReminderList rl){
         dbAd.deleteList(rl);
     }
