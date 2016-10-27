@@ -3,6 +3,7 @@ package blau.team.remindme;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -25,6 +26,10 @@ import blau.team.remindme.db.model.ReminderList;
 import static android.R.attr.name;
 import static android.R.attr.start;
 
+/**
+ * This Activity is the Controller for activity_add.xml
+ * The Activity is needed to create a new List and the store it in Database
+ */
 public class AddActivity extends AppCompatActivity {
 
     private Button addButton, changeDateButton, changeTimeButton, submitDate, submitTime;
@@ -47,8 +52,10 @@ public class AddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
+        // Loads the current Database
         model = Model.getInstance();
 
+        // Get all UI Elements and set OnClickListener if needed
         linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
 
         modeSwitch = (Switch) findViewById(R.id.modeSwitch);
@@ -71,14 +78,10 @@ public class AddActivity extends AppCompatActivity {
         tt2 = (EditText) findViewById(R.id.timeText2);
         en = (EditText) findViewById(R.id.editName);
 
+        // Represents the selection between temporary and regular list
         mode = false;
     }
 
-    public Boolean getMode() {
-        return this.mode;
-    }
-
-    public void setMode(Boolean mode) { this.mode = mode;}
 
     public void toggleMode() {
         this.mode = !this.mode;
@@ -111,6 +114,9 @@ public class AddActivity extends AppCompatActivity {
         return null;
     }
 
+    /**
+     * If this button is clicked create a new ReminderList and save it into Database
+     */
     public View.OnClickListener addButtonPressed = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -143,14 +149,20 @@ public class AddActivity extends AppCompatActivity {
             }
             Intent changeActivityMain = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(changeActivityMain);
+            // close this Activity
             finish();
         }
 };
 
+    /**
+     * Then User wants to change the date of the List this method gets called.
+     * It creates a new Datepicker and adds it to the UI.
+     * Also creates a Submit Button.
+     */
     public View.OnClickListener changeDateButtonPressed = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            // TODO prevent that user can create more than one DatePicker by pressing Button twice
             dp = new DatePicker(AddActivity.this);
 
             submitDate = new Button(AddActivity.this);
@@ -163,6 +175,9 @@ public class AddActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * If this Button is pressed the Data should be load from the DatePicker and then the DatePicker will be removed.
+     */
     public View.OnClickListener onSubmitDate = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -173,10 +188,15 @@ public class AddActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * Then User wants to change the time of the List this method gets called.
+     * It creates a new timepicker and adds it to the UI.
+     * Also creates a Submit Button.
+     */
     public View.OnClickListener changeTimeButtonPressed = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            // TODO prevent that user can create more than one TimePicker
             tp = new TimePicker(AddActivity.this);
             tp.setIs24HourView(true);
 
@@ -189,6 +209,9 @@ public class AddActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * If this Button is pressed the Data should be load from the TimePicker and then the TimePicker will be removed.
+     */
     public View.OnClickListener onSubmitTime = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -201,6 +224,11 @@ public class AddActivity extends AppCompatActivity {
 
     // Getter and Setter section
 
+    public Boolean getMode() {
+        return this.mode;
+    }
+
+    public void setMode(Boolean mode) { this.mode = mode;}
 
     public Date getDateBeginInput() {
         return dateBeginInput;
