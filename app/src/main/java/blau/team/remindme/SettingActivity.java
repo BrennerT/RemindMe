@@ -46,7 +46,7 @@ public class SettingActivity extends AppCompatActivity {
         // Get current instance of Model and Realm
         model = Model.getInstance();
         realm = Realm.getDefaultInstance();
-        Notifier.getInstance();
+        notifier = Notifier.getInstance();
 
         vb = (Switch) findViewById(R.id.vibration);
         sb = (Switch) findViewById(sound);
