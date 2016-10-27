@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private TableLayout temp, standard;
     private Model model;
     private Notifier notifier;
+    private Intent startNotifierService;
     SimpleDateFormat format = new SimpleDateFormat("dd.MM.yy");
 
     @Override
@@ -59,9 +60,10 @@ public class MainActivity extends AppCompatActivity {
         // GPSLocator must get the Context from MainActivity
         GPSLocator.setmContext(this);
         // Start Service notifier
-        Intent startNotifierService = new Intent(this, Notifier.class);
+        startNotifierService = new Intent(this, Notifier.class);
         startService(startNotifierService);
         notifier = Notifier.getInstance();
+
 
         // Find all UI Elements
         addButton = (Button) findViewById(R.id.addButton);

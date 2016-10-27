@@ -22,6 +22,7 @@ import java.util.List;
 
 import blau.team.remindme.db.Model;
 import blau.team.remindme.db.model.ReminderList;
+import blau.team.remindme.notifier.Notifier;
 
 import static android.R.attr.name;
 import static android.R.attr.start;
@@ -149,6 +150,11 @@ public class AddActivity extends AppCompatActivity {
             }
             Intent changeActivityMain = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(changeActivityMain);
+
+            // Stop Notifier
+            Intent stopNotifier = new Intent(getApplicationContext(), Notifier.class);
+            stopService(stopNotifier);
+
             // close this Activity
             finish();
         }
