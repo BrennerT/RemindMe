@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
@@ -164,6 +165,13 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return temps;
+    }
+
+    @Override
+    protected void onResume() {
+        //TODO Implement Reload
+        Log.d("| Just some r","andom shit");
+        super.onResume();
     }
 
     // Getter and Setter Section
