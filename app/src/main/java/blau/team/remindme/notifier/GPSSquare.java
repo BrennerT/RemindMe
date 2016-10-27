@@ -4,6 +4,7 @@ import android.location.Location;
 
 /**
  * Created by Torben on 28.09.2016.
+ * Getts the 4 GPS Corners and provides them for GPSLocator
  */
 // TODO: Add funktionality of GPSSquare
 public class GPSSquare {
