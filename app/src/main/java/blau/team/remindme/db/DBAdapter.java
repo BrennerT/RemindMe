@@ -111,7 +111,7 @@ public class DBAdapter {
      */
     public void deleteList(ReminderList rl){
         realm.beginTransaction();
-        rl.deleteFromRealm();
+        rl.setActive(false);
         realm.commitTransaction();
     }
 
