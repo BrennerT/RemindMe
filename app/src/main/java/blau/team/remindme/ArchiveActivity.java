@@ -12,6 +12,10 @@ import java.util.List;
 import blau.team.remindme.db.Model;
 import blau.team.remindme.db.model.ReminderList;
 
+/**
+ * This Activity is the Controller for activity_archive.xml
+ * The Activity is shows the last 30 InActive Lists
+ */
 public class ArchiveActivity extends AppCompatActivity {
 
     private List<Button> restoreButtons;
@@ -24,21 +28,31 @@ public class ArchiveActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_archive);
 
+        // Get Current Database
         model = Model.getInstance();
     }
+
 
     public View.OnClickListener restoreButtonPressed = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            // TODO find currently selected list and the restore it
         }
     };
 
+    /**
+     * This Method should reactivate a inactive list
+     * @param rl the list to be restored
+     */
     public void restoreList (ReminderList rl){
         rl.setActive(true);
         model.addList(rl);
     }
 
+    /**
+     * Finds all inactive lists in database
+     * @return a list of inactive lists
+     */
     public List<ReminderList> getInactiveLists() {
         List<ReminderList> inactive = new ArrayList<>();
         for (ReminderList r : model.getLists()) {
@@ -57,6 +71,7 @@ public class ArchiveActivity extends AppCompatActivity {
     }
 
     // Getters and Setters section
+
     public List<Button> getRestoreButtons() {
         return restoreButtons;
     }
