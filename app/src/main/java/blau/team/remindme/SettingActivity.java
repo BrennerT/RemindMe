@@ -65,15 +65,6 @@ public class SettingActivity extends AppCompatActivity {
         // loads settings from database
         settingInput = model.getSettings();
 
-        // if no settings are found make default settings
-        if(settingInput == null) {
-            RealmList<GPSPoint> corners = new RealmList<>();
-            for (int i = 0; i <= 3; i++) {
-                corners.add(new GPSPoint(0.0, 0.0));
-            }
-            settingInput = new Settings(false, false, corners);
-        }
-
         // Update GUI
         vb.setChecked(settingInput.isVibration());
         sb.setChecked(settingInput.isSound());

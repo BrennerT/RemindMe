@@ -21,12 +21,15 @@ import io.realm.annotations.PrimaryKey;
 public class ReminderList extends RealmObject {
     @PrimaryKey
     private long id;
+
     private int interval;
     private boolean active;
     private String name;
     // 1 to n relations to ReminderElement and Termin
     private RealmList<ReminderElement> elements;
     private Termin termin;
+
+    private boolean notificationFlag;
 
     /**
      * Constructor with parameters
@@ -57,6 +60,14 @@ public class ReminderList extends RealmObject {
     }
 
     // Getters and Setters Section
+
+    public boolean isNotificationFlag() {
+        return notificationFlag;
+    }
+
+    public void setNotificationFlag(boolean notificationFlag) {
+        this.notificationFlag = notificationFlag;
+    }
 
     public RealmList<ReminderElement> getElements() {
         return elements;

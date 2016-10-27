@@ -9,6 +9,7 @@ import blau.team.remindme.db.model.Settings;
 import blau.team.remindme.db.model.Termin;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 
 import static android.R.attr.id;
@@ -31,8 +32,7 @@ public class DBAdapter {
 //      RealmConfiguration config = new RealmConfiguration.Builder()
 //                .deleteRealmIfMigrationNeeded()
 //                .build();
-//
-//       realm = Realm.getInstance(config);
+//        realm = Realm.getInstance(config);
 
         realm = Realm.getDefaultInstance();
 
@@ -124,7 +124,12 @@ public class DBAdapter {
     public void changeSetting(Settings setting){
         realm.beginTransaction();
         if(realm.where(Settings.class).findAll().isEmpty()){
-            // if there is no setting in database write this new on into it and give it an id
+            // if there is no setting in database write this new one into it and give it an id
+            RealmList<GPSPoint> corners = new RealmList<>();
+                for (int i = 0; i <= 3; i++) {
+                    corners.add(new GPSPoint(0.0, 0.0));
+                }
+            setting = new Settings(false, false, corners);
             setting.setId(1);
             realm.copyToRealm(setting);
         }else{

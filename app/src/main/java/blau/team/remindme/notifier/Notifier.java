@@ -63,8 +63,8 @@ public class Notifier extends IntentService {
         List<ReminderList> todayLists = getListsByDay(getActualTime());
         try {
             while(true) {
-                getActualTime();
                 getActualLocation();
+                getListsByDay(getActualTime());
                 for (ReminderList l : todayLists) {
                     check(l);
                 }
@@ -91,14 +91,6 @@ public class Notifier extends IntentService {
                 }
             }
         }
-
-//        List<ReminderList> reminderLists = getLists();
-//        List<ReminderList> returnLists = new ArrayList<>();
-//        for (ReminderList l: reminderLists) {
-//            if(l.getTermins().getBeginDate().compareTo(d)==0){
-//                returnLists.add(l);
-//            }
-//        }
         return returnLists;
     }
 
@@ -107,25 +99,33 @@ public class Notifier extends IntentService {
      * @param r List to push
      */
     public void pushMessage(ReminderList r){
+        if(!r.isNotificationFlag()) {
+            NotificationManager mNotificationManager = (NotificationManager)
+                    this.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        NotificationManager mNotificationManager = (NotificationManager)
-                this.getSystemService(Context.NOTIFICATION_SERVICE);
+            PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+                    new Intent(this, MainActivity.class), 0);
+            String msg = "";
 
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, MainActivity.class), 0);
-        String msg = "";
+            for (ReminderElement e : r.getElements()) {
+                msg += e.getName() + "\n";
+            }
 
-        for (ReminderElement e: r.getElements()) {
-            msg += e.getName() + "\n";
+            NotificationCompat.Builder mBuilder =
+                    new NotificationCompat.Builder(this)
+                            .setSmallIcon(R.mipmap.ic_launcher)
+                            .setContentTitle("RemindMe: " + r.getName())
+                            .setContentText(msg);
+            mBuilder.setContentIntent(contentIntent);
+            mNotificationManager.notify(1, mBuilder.build());
+
+            // Write to Realm
+            Realm realm = Realm.getDefaultInstance();
+            realm.beginTransaction();
+            r.setNotificationFlag(true);
+            realm.commitTransaction();
+
         }
-
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle("RemindMe: "+ r.getName())
-                        .setContentText(msg);
-        mBuilder.setContentIntent(contentIntent);
-        mNotificationManager.notify(1, mBuilder.build());
     }
 
     /**
@@ -133,43 +133,10 @@ public class Notifier extends IntentService {
      * @param r a List which should be checked
      */
     public void check(ReminderList r) {
+        if(gps.isOutOfSquare(r)){
+            pushMessage(r);
+        }
 
-        // get the data
-        Date begin = r.getTermins().getBeginDate();
-        Date end = r.getTermins().getEndDate();
-
-//        this.getActualTime();
-
-        // TODO better check for Time currently deactivated
-//        Date intervall = new Date(r.getInterval());
-//
-//        // if end and begin not null
-//        if (end != null && begin != null) {
-//            // check if between start and end date, also for future dates which get determined by intervall
-//                if((this.getActualTime().getTime() % intervall >= begin.getTime() % intervall
-//                        && this.getActualTime().getTime() % intervall <= end.getTime() % intervall
-//                        && this.getActualTime().getTime() >= begin.getTime()){
-//                    if(gps.isOutOfSquare(r)){
-//                        pushMessage(r);
-//                    }
-//                // % because of the intervall and the last check because we have to look if the
-//                // list ist active
-//            }
-//            // gps with time
-//        }
-
-//        if (end == null && begin != null) {
-//            if (this.getActualTime() >= begin * 0.95 && this.getActualTime() <= begin * 1.05 ) {
-//                pushMessage(r);
-//                // 0.95 and 1.05 because we dont go in this function every second
-//            }
-//            // only time
-//        }
-
-            if(gps.isOutOfSquare(r)){
-                pushMessage(r);
-            }
-            // only gps
     }
 
     // Getter and Setter section
