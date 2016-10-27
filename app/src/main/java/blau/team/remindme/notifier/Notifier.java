@@ -15,6 +15,9 @@ import blau.team.remindme.R;
 import blau.team.remindme.db.Model;
 import blau.team.remindme.db.model.ReminderList;
 
+/**
+ * This Service is responsible for pushing Notifications when the user leafs the setted GPSSquare
+ */
 public class Notifier extends Service {
 
     private static Notifier instance;
@@ -24,6 +27,10 @@ public class Notifier extends Service {
     private Model model;
     private GPSLocator gps;
 
+    /**
+     * Constructor
+     * Will create a new GPSLocator
+     */
     public Notifier() {
         gps = new GPSLocator();
     }
@@ -34,10 +41,19 @@ public class Notifier extends Service {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
+    /**
+     * Searches all Lists for the Current Day
+     * @param d should be current Data
+     * @return list of ReminderList
+     */
     public List<ReminderList> getListsByDay(Date d){
         return null;
     }
 
+    /**
+     * Pushes Notification for the User
+     * @param r List to push
+     */
     public void pushMessage(ReminderList r){
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
@@ -45,8 +61,15 @@ public class Notifier extends Service {
                         .setContentTitle("RemindMe" + r.getName())
                         .setContentText(r.getElements().toString());
     }
+
     // TODO: Implement functionality for notifier to work in Background
+
+    /**
+     * Checks if a Notification should be pushed and starts the push process
+     * @param r a List which should be checked
+     */
     public void check(ReminderList r) {
+
         // get the data
         Date begin = r.getTermins().getBeginDate();
         Date end = r.getTermins().getEndDate();
@@ -88,6 +111,8 @@ public class Notifier extends Service {
         }
     }
 
+    // Getter and Setter section
+
     public Date getActualTime() {
         return actualTime;
     }
@@ -96,13 +121,13 @@ public class Notifier extends Service {
         this.actualTime = actualTime;
     }
 
+    /**
+     * Loads the current location from GPSLocator
+     * @return the current Location
+     */
     public Location getActualLocation() {
         actualLocation = gps.getCurrentLocation();
         return actualLocation;
-    }
-
-    public void setActualLocation(Location actualLocation) {
-        this.actualLocation = actualLocation;
     }
 
     public static Notifier getInstance() {
