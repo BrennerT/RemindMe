@@ -5,8 +5,11 @@ import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -14,6 +17,7 @@ import android.widget.TextView;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
@@ -31,9 +35,17 @@ public class MainActivity extends AppCompatActivity {
 
     private Button addButton, settingsButton, archiveButton;
     private TableLayout temp, standard;
-    private Model model;
+    static Model model;
+    private TextView showedLists;
     private Notifier notifier;
-    SimpleDateFormat format = new SimpleDateFormat("dd.MM.yy");
+    private RecyclerView tempRV;
+    private RecyclerView.Adapter tempRVAdapter;
+    private RecyclerView.LayoutManager tempRVLM;
+    static ArrayList<ReminderList> lists_toShow;
+    static ArrayList<Integer> itemFotoIDs;
+    static TextView tv1, tv2, tv3, tv4, tv5, tv6;
+    private Switch viewModeSwitch;
+    private boolean viewMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,16 +60,33 @@ public class MainActivity extends AppCompatActivity {
         addButton = (Button) findViewById(R.id.addButton);
         settingsButton = (Button) findViewById(R.id.settingsButton);
         archiveButton = (Button) findViewById(R.id.archiveButton);
+        viewModeSwitch = (Switch) findViewById(R.id.switch1);
+        showedLists = (TextView) findViewById(R.id.textView);
 
-        temp = (TableLayout) findViewById(R.id.temp);
-        standard = (TableLayout) findViewById(R.id.standard);
+        //temp = (TableLayout) findViewById(R.id.temp);
+        //standard = (TableLayout) findViewById(R.id.standard);
 
         addButton.setOnClickListener(addButtonPressed);
         settingsButton.setOnClickListener(settingsButtonPressed);
         archiveButton.setOnClickListener(archiveButtonPressed);
+        viewModeSwitch.setOnClickListener(switchHandler);
 
-        showLists(getTempList(),1);
-        showLists(getStandardList(),0);
+        tempRV = (RecyclerView) findViewById(R.id.tempRV);
+        tempRVLM = new LinearLayoutManager(this);
+        tempRV.setLayoutManager(tempRVLM);
+
+        tempRVAdapter = new RVAdapterKlasse();
+        tempRV.setAdapter(tempRVAdapter);
+
+        tv1 = (TextView) findViewById(R.id.tv1);
+        tv2 = (TextView) findViewById(R.id.tv2);
+        tv3 = (TextView) findViewById(R.id.tv3);
+        tv4 = (TextView) findViewById(R.id.tv4);
+        tv5 = (TextView) findViewById(R.id.tv5);
+        tv6 = (TextView) findViewById(R.id.tv6);
+
+        viewMode = true;
+        showLists(getTempList());
     }
 
     View.OnClickListener addButtonPressed = new View.OnClickListener() {
@@ -84,6 +113,27 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    public View.OnClickListener switchHandler = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            toggleMode();
+            tempRVAdapter = new RVAdapterKlasse();
+            tempRV.setAdapter(tempRVAdapter);
+            // true ist enspricht dem Anlegen einer Standardliste, false dem Anlegen einer Temporären Liste
+            if (viewMode == true){
+                showedLists.setText("Temporäre Listen");
+                showLists(getTempList());
+            } else {
+                showedLists.setText("Standard-Listen");
+                showLists(getStandardList());
+            }
+        }
+    };
+
+    public void toggleMode(){
+        this.viewMode = !viewMode;
+    }
+
     public void onSwipeLeft() {
 
     }
@@ -91,8 +141,16 @@ public class MainActivity extends AppCompatActivity {
     public void onSwipeRight() {
 
     }
-    public void showLists(List<ReminderList> tempLists, int mode){
-        for (ReminderList l: tempLists) {
+    public void showLists(List<ReminderList> lists){
+        lists_toShow = new ArrayList<>();
+        itemFotoIDs = new ArrayList<>();
+        for (ReminderList l: lists) {
+            lists_toShow.add(l);
+            itemFotoIDs.addAll(Arrays.asList(R.drawable.gps));
+        }
+
+
+     /*   for (ReminderList l: tempLists) {
             //Erstellen der einer neuen Reihe für die Liste
             TableRow row = new TableRow(MainActivity.this);
 
@@ -120,13 +178,13 @@ public class MainActivity extends AppCompatActivity {
             if(mode ==1) {
                 temp.addView(row);
             } else {standard.addView(row);}
-        }
+        }*/
     }
 
     public List<ReminderList> getStandardList() {
         List<ReminderList> standards = new ArrayList<>();
         for (ReminderList r : model.getLists()) {
-            if (r.getInterval() != 0) {
+            if (r.getInterval() != 0 && r.isActive()) {
                 standards.add(r);
             }
         }
@@ -136,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
     public List<ReminderList> getTempList() {
         List<ReminderList> temps = new ArrayList<>();
         for (ReminderList r : model.getLists()) {
-            if (r.getInterval() == 0) {
+            if (r.getInterval() == 0 && r.isActive()) {
                 temps.add(r);
             }
         }

@@ -24,11 +24,11 @@ public class DBAdapter {
     private IDGenerator listIdGenerator,elementIdGenerator,terminIdGenerator;
 
     public DBAdapter(){
-//      RealmConfiguration config = new RealmConfiguration.Builder()
-//                .deleteRealmIfMigrationNeeded()
-//                .build();
-//
-//       realm = Realm.getInstance(config);
+      //RealmConfiguration config = new RealmConfiguration.Builder()
+       //         .deleteRealmIfMigrationNeeded()
+        //         .build();
+
+       //realm = Realm.getInstance(config);
 
         realm = Realm.getDefaultInstance();
 
@@ -111,7 +111,7 @@ public class DBAdapter {
      */
     public void deleteList(ReminderList rl){
         realm.beginTransaction();
-        rl.deleteFromRealm();
+        rl.setActive(false);
         realm.commitTransaction();
     }
 
