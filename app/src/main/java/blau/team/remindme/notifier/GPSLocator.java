@@ -34,6 +34,8 @@ public class GPSLocator extends Service implements LocationListener {
      * Constructor for GPSLocator
      */
     public GPSLocator() {
+        actual = new GPSSquare();
+
         locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
 
         // Check if permission granted
@@ -110,9 +112,10 @@ public class GPSLocator extends Service implements LocationListener {
         if (!threeToFour || !oneToTwo || !oneToThree || !twoToFour) {
             // if leave
             return true;
+        } else {
+            // if not left
+            return false;
         }
-        // if not left
-        return false;
     }
 
     /**
