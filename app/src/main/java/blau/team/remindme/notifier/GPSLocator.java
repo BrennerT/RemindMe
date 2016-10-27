@@ -52,7 +52,7 @@ public class GPSLocator extends Service implements LocationListener {
             }
             locationProvider = locationManager.getProvider("gps");
             locationManager.requestLocationUpdates("gps",
-                    15000, // 15sek
+                    2000, // 15sek
                     1,   // 10m
                     this);
         } catch (Exception e) {
@@ -92,12 +92,12 @@ public class GPSLocator extends Service implements LocationListener {
         // check if the person is lower then the top line
         Boolean threeToFour = (cornerFourLatitude + (cornerFourLatitude - cornerThreeLatitude) /
                 (cornerFourLongitude - cornerThreeLongitude) * actuaLongitude)
-                <= actualLatitude;
+                >= actualLatitude;
 
         // check if the person is higher then the bottom line
         Boolean oneToTwo = (cornerOneLatitude + (cornerOneLatitude - cornerTwoLatitude) /
                 (cornerOneLongitude - cornerTwoLongitude) * actuaLongitude)
-                >= actualLatitude;
+                <= actualLatitude;
 
         // check if the person are right from the left line
         Boolean oneToThree = (cornerOneLongitude + (cornerOneLongitude - cornerThreeLongitude) /

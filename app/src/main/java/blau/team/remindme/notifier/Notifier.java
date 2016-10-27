@@ -63,10 +63,12 @@ public class Notifier extends IntentService {
         List<ReminderList> todayLists = getListsByDay(getActualTime());
         try {
             while(true) {
+                getActualTime();
+                getActualLocation();
                 for (ReminderList l : todayLists) {
                     check(l);
                 }
-                Thread.sleep(100);
+                Thread.sleep(2000);
             }
         }catch(InterruptedException ie){
             Thread.currentThread().interrupt();
