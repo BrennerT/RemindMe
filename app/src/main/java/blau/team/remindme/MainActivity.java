@@ -32,6 +32,10 @@ import blau.team.remindme.notifier.Notifier;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
+/**
+ * This Activity is the Controller for activity_main.xml
+ * This Activity is the Main Activity and startpoint of RemindMe.
+ */
 public class MainActivity extends AppCompatActivity {
 
     private Button addButton, settingsButton, archiveButton;
@@ -45,8 +49,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Load Realm
         Realm.init(getApplicationContext());
 
+        // Load Model with new Database
         model = Model.getInstance();
         model.reload();
 
@@ -54,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         GPSLocator.setmContext(this);
         notifier = Notifier.getInstance();
 
+        // Find all UI Elements
         addButton = (Button) findViewById(R.id.addButton);
         settingsButton = (Button) findViewById(R.id.settingsButton);
         archiveButton = (Button) findViewById(R.id.archiveButton);
@@ -79,11 +86,15 @@ public class MainActivity extends AppCompatActivity {
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS},1);
         }
 
+        // Load all UIELements
         showLists(getTempList(),1);
         showLists(getStandardList(),0);
 
     }
 
+    /**
+     * Starts AddActivity
+     */
     View.OnClickListener addButtonPressed = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -92,6 +103,9 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * Starts Settings Activity
+     */
     View.OnClickListener settingsButtonPressed = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -100,6 +114,9 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * Starts Archive Activity
+     */
     View.OnClickListener archiveButtonPressed = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -109,12 +126,18 @@ public class MainActivity extends AppCompatActivity {
     };
 
     public void onSwipeLeft() {
-
+        // TODO implement change between temporary and regular list view
     }
 
     public void onSwipeRight() {
-
+        // TODO implement change between temporary and regular list view
     }
+
+    /**
+     * Shows all Lists in GUI
+     * @param tempLists Lists of ReminderLists
+     * @param mode  change between regular and temporary
+     */
     public void showLists(List<ReminderList> tempLists, int mode){
         for (ReminderList l: tempLists) {
             //Erstellen der einer neuen Reihe für die Liste
@@ -147,6 +170,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Find all StandardLists in Model
+     * @return list of StandardLists
+     */
     public List<ReminderList> getStandardList() {
         List<ReminderList> standards = new ArrayList<>();
         for (ReminderList r : model.getLists()) {
@@ -157,6 +184,10 @@ public class MainActivity extends AppCompatActivity {
         return standards;
     }
 
+    /**
+     * Find all temporary lists in model
+     * @return list of temporary lists
+     */
     public List<ReminderList> getTempList() {
         List<ReminderList> temps = new ArrayList<>();
         for (ReminderList r : model.getLists()) {
@@ -170,11 +201,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         //TODO Implement Reload
-        Log.d("| Just some r","andom shit");
         super.onResume();
     }
 
     // Getter and Setter Section
+
     public TableLayout getTemp() {
         return temp;
     }
