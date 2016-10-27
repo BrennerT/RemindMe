@@ -36,6 +36,9 @@ import static blau.team.remindme.MainActivity.tv6;
 public class RVArchiveAdapterKlasse extends RecyclerView.Adapter<RVArchiveAdapterKlasse.ViewHolderKlasse>{
     SimpleDateFormat format = new SimpleDateFormat("dd.MM.yy HH:mm");
 
+    /**
+     * Based on RVAdapterKlasse,for ArchiveActivity
+     */
     public class ViewHolderKlasse extends RecyclerView.ViewHolder {
 
         TextView itemTextView;

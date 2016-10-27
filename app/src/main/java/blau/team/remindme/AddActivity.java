@@ -83,7 +83,9 @@ public class AddActivity extends AppCompatActivity {
         mode = false;
     }
 
-
+    /**
+     * Switch between standard and temporary view
+     */
     public void toggleMode() {
         this.mode = !this.mode;
     }
@@ -92,7 +94,7 @@ public class AddActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             toggleMode();
-            // true ist enspricht dem Anlegen einer Standardliste, false dem Anlegen einer Temporären Liste
+            // true -> add standard list, false -> add temporary List
             if (mode == true){
                 modeSwitch.setText("Standard");
             } else {
@@ -102,7 +104,7 @@ public class AddActivity extends AppCompatActivity {
     };
 
     public Date convertToDate(String s){
-        //Konvertieren des User Date & Zeit Inputs zu einem Datum
+        //convert user date and time to Date
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yy HH:mm");
         try {
             Date date = format.parse(s);
@@ -121,17 +123,18 @@ public class AddActivity extends AppCompatActivity {
     public View.OnClickListener addButtonPressed = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            //Element-Input des Users in Liste packen
+
+            // pack element input of user into ReminderList
             List<String> elements = new ArrayList<>();
             elements.add(et1.getText().toString());
             elements.add(et2.getText().toString());
             elements.add(et3.getText().toString());
             elementInput = elements;
 
-            //Name-Input
+            //name-Input
             nameInput = en.getText().toString();
 
-            // Konvertieren des Inputs zu Daten
+            // convert input String to date
             dateBeginInput = convertToDate(dt1.getText().toString() + ' '+ tt1.getText().toString());
             dateEndInput = convertToDate(dt2.getText().toString() + ' '+ tt2.getText().toString());
 

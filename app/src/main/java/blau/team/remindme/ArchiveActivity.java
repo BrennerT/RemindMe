@@ -16,6 +16,7 @@ import java.util.List;
 
 import blau.team.remindme.db.Model;
 import blau.team.remindme.db.model.ReminderList;
+import blau.team.remindme.notifier.Notifier;
 
 /**
  * This Activity is the Controller for activity_archive.xml
@@ -50,8 +51,10 @@ public class ArchiveActivity extends AppCompatActivity {
         tempRVAdapter = new RVArchiveAdapterKlasse();
         tempRV.setAdapter(tempRVAdapter);
 
+        // load Model
         model = Model.getInstance();
 
+        //Get GUI Items for DetailView
         tv1a = (TextView) findViewById(R.id.tv1a);
         tv2a = (TextView) findViewById(R.id.tv2a);
         tv3a = (TextView) findViewById(R.id.tv3a);
@@ -59,9 +62,14 @@ public class ArchiveActivity extends AppCompatActivity {
         tv5a = (TextView) findViewById(R.id.tv5a);
         tv6a = (TextView) findViewById(R.id.tv6a);
 
+        // Get all archived lists and show them
         showLists(getInactiveLists());
     }
 
+    /**
+     * Gives Lists to RVArchiveAdapterKlasse
+     * @param lists
+     */
     public void showLists(List<ReminderList> lists){
         lists_toShow = new ArrayList<>();
         itemFotoIDs = new ArrayList<>();
@@ -86,11 +94,17 @@ public class ArchiveActivity extends AppCompatActivity {
         return inactive;
     }
 
+    /**
+     * Return to MainScreen and reload notifier
+     */
     View.OnClickListener backButtonPressed = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            Intent stopNotifier = new Intent(getApplicationContext(), Notifier.class);
+            stopService(stopNotifier);
             Intent changeActivityMain = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(changeActivityMain);
+            finish();
         }
     };
 

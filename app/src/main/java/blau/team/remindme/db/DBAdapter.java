@@ -144,6 +144,18 @@ public class DBAdapter {
      * Gets the Settings from Database
      */
     public Settings getSettings(){
+        if(realm.where(Settings.class).findAll().isEmpty()) {
+            // if there is no setting in database write this new one into it and give it an id
+            RealmList<GPSPoint> corners = new RealmList<>();
+            for (int i = 0; i <= 3; i++) {
+                corners.add(new GPSPoint(0.0, 0.0));
+            }
+            Settings setting = new Settings(false, false, corners);
+            setting.setId(1);
+            realm.beginTransaction();
+            realm.copyToRealm(setting);
+            realm.commitTransaction();
+        }
         return realm.where(Settings.class).findFirst();
     }
 

@@ -26,6 +26,9 @@ public class RVAdapterKlasse extends RecyclerView.Adapter<RVAdapterKlasse.ViewHo
 
     SimpleDateFormat format = new SimpleDateFormat("dd.MM.yy HH:mm");
 
+    /**
+     * Description of one List Element
+     */
     public class ViewHolderKlasse extends RecyclerView.ViewHolder {
 
         TextView itemTextView;
@@ -42,6 +45,12 @@ public class RVAdapterKlasse extends RecyclerView.Adapter<RVAdapterKlasse.ViewHo
         }
     }
 
+    /**
+     * Create a new View based item_layout1.xml
+     * @param viewGroup
+     * @param i
+     * @return a View Holder
+     */
     @Override
     public ViewHolderKlasse onCreateViewHolder(ViewGroup viewGroup, int i) {
 
@@ -50,12 +59,19 @@ public class RVAdapterKlasse extends RecyclerView.Adapter<RVAdapterKlasse.ViewHo
         return new ViewHolderKlasse(itemView1);
     }
 
+    /**
+     * Show the detailed view of a ReminderList
+     * @param viewHolderKlasse
+     * @param i
+     */
     @Override
     public void onBindViewHolder(final ViewHolderKlasse viewHolderKlasse, final int i) {
 
+            // Update UI
             viewHolderKlasse.itemTextView.setText(MainActivity.lists_toShow.get(i).getName());
             viewHolderKlasse.itemImageView.setImageResource(MainActivity.itemFotoIDs.get(i));
 
+            // Sets Detailed View
             viewHolderKlasse.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -69,9 +85,7 @@ public class RVAdapterKlasse extends RecyclerView.Adapter<RVAdapterKlasse.ViewHo
 
             });
 
-
-
-
+            // sets ReminderList inactive
             viewHolderKlasse.deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -91,8 +105,11 @@ public class RVAdapterKlasse extends RecyclerView.Adapter<RVAdapterKlasse.ViewHo
             });
         }
 
-
-        @Override
+    /**
+     * Gets amount of view lists
+     * @return
+     */
+    @Override
         public int getItemCount() {
             return MainActivity.lists_toShow.size();
         }

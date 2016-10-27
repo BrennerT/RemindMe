@@ -87,7 +87,9 @@ public class Notifier extends IntentService {
         for (ReminderList l: lists) {
             if(l.getTermins().getBeginDate().getTime()<= d.getTime()){
                 if(l.getTermins().getEndDate().getTime()>=d.getTime()){
-                    returnLists.add(l);
+                    if(l.isActive()) {
+                        returnLists.add(l);
+                    }
                 }
             }
         }

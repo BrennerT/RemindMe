@@ -156,13 +156,16 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * Switch between standard list view and temporary view
+     */
     public View.OnClickListener switchHandler = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             toggleMode();
             tempRVAdapter = new RVAdapterKlasse();
             tempRV.setAdapter(tempRVAdapter);
-            // true ist enspricht dem Anlegen einer Standardliste, false dem Anlegen einer Temporären Liste
+            // true -> add standard list, false -> add temporary list
             if (viewMode == true){
                 showedLists.setText("Temporäre Listen");
                 showLists(getTempList());
@@ -187,8 +190,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Shows all Lists in GUI
-     * @param tempLists Lists of ReminderLists
-     * @param mode  change between regular and temporary
+     * @param lists The ReminderLists to show
      */
     public void showLists(List<ReminderList> lists){
         lists_toShow = new ArrayList<>();
