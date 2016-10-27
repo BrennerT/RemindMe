@@ -21,6 +21,10 @@ import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
 import static android.media.CamcorderProfile.get;
 import static blau.team.remindme.R.id.sound;
 
+/**
+ * This Activity is the Controller for activity_settings.xml
+ * The Activity is needed change the Settings and save them to Database
+ */
 public class SettingActivity extends AppCompatActivity {
 
     private Settings settingInput;
@@ -39,9 +43,10 @@ public class SettingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
+        // Get current instance of Model and Realm
         model = Model.getInstance();
         realm = Realm.getDefaultInstance();
-        notifier = new Notifier();
+        Notifier.getInstance();
 
         vb = (Switch) findViewById(R.id.vibration);
         sb = (Switch) findViewById(sound);
@@ -80,6 +85,10 @@ public class SettingActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Is called when user wants to change settings for Vibration
+     * Safes the change in Database
+     */
     View.OnClickListener vSwitchPressed = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -89,6 +98,10 @@ public class SettingActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * Is called when user wants to change settings for Sound
+     * Safes the change in Database
+     */
     View.OnClickListener sSwitchPressed = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -98,6 +111,10 @@ public class SettingActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * Is called when user wants to change the first corner of GPSSquare
+     * Safes the change in Database
+     */
     View.OnClickListener gpsSetter1Pressed = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -110,6 +127,10 @@ public class SettingActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * Is called when user wants to change the second corner of GPSSquare
+     * Safes the change in Database
+     */
     View.OnClickListener gpsSetter2Pressed = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -122,6 +143,10 @@ public class SettingActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * Is called when user wants to change the third corner of GPSSquare
+     * Safes the change in Database
+     */
     View.OnClickListener gpsSetter3Pressed = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -135,6 +160,10 @@ public class SettingActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * Is called when user wants to change the fourth corner of GPSSquare
+     * Safes the change in Database
+     */
     View.OnClickListener gpsSetter4Pressed = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -147,6 +176,17 @@ public class SettingActivity extends AppCompatActivity {
         }
     };
 
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        //update db
+        model.setSettings(settingInput);
+        finish();
+    }
+
+    // Getters and Setters section
+
     public Model getModel() {
         return model;
     }
@@ -155,12 +195,4 @@ public class SettingActivity extends AppCompatActivity {
         this.model = model;
     }
 
-    @Override
-    protected void onDestroy()
-    {
-        super.onDestroy();
-        //Updaten der DB
-        model.setSettings(settingInput);
-        finish();
-    }
 }
