@@ -23,6 +23,7 @@ import java.util.Locale;
 import blau.team.remindme.MainActivity;
 import blau.team.remindme.R;
 import blau.team.remindme.db.Model;
+import blau.team.remindme.db.model.ReminderElement;
 import blau.team.remindme.db.model.ReminderList;
 import io.realm.Realm;
 
@@ -104,31 +105,26 @@ public class Notifier extends IntentService {
      * @param r List to push
      */
     public void pushMessage(ReminderList r){
-//        getMainLooper().
-//        NotificationCompat.Builder mBuilder =
-//                new NotificationCompat.Builder(this)
-//                        .setSmallIcon(R.mipmap.ic_launcher)
-//                        .setContentTitle("RemindMe" + r.getName())
-//                        .setContentText(r.getElements().toString());
-//        Notification n = mBuilder.build();
-//        n.notify();
 
         NotificationManager mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
 
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, MainActivity.class), 0);
+        String msg = "";
+
+        for (ReminderElement e: r.getElements()) {
+            msg += e.getName() + "\n";
+        }
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle("GCM Notification")
-                        .setContentText(r.getName());
+                        .setContentTitle("RemindMe: "+ r.getName())
+                        .setContentText(msg);
         mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(1, mBuilder.build());
     }
-
-    // TODO: Implement functionality for notifier to work in Background
 
     /**
      * Checks if a Notification should be pushed and starts the push process
@@ -176,6 +172,10 @@ public class Notifier extends IntentService {
 
     // Getter and Setter section
 
+    /**
+     * Gets the current Time von calendar instance
+     * @return the current time
+     */
     public Date getActualTime() {
         actualTime = Calendar.getInstance(Locale.GERMANY).getTime();
         return actualTime;
