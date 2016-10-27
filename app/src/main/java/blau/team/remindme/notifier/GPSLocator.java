@@ -20,6 +20,7 @@ import blau.team.remindme.db.model.ReminderList;
 
 /**
  * Created by Torben on 28.09.2016.
+ * The GPSLocator should find out the current Location via GPS and check if the GPSSquare is left
  */
 
 public class GPSLocator extends Service implements LocationListener {
@@ -29,9 +30,13 @@ public class GPSLocator extends Service implements LocationListener {
     private Location currentLocation;
     private static Context mContext;
 
+    /**
+     * Constructor for GPSLocator
+     */
     public GPSLocator() {
         locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
 
+        // Check if permission granted
         try {
             if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
@@ -45,7 +50,7 @@ public class GPSLocator extends Service implements LocationListener {
             }
             locationProvider = locationManager.getProvider("gps");
             locationManager.requestLocationUpdates("gps",
-                    15000, // 1min
+                    15000, // 15sek
                     1,   // 10m
                     this);
         } catch (Exception e) {
@@ -60,6 +65,11 @@ public class GPSLocator extends Service implements LocationListener {
 
     }
 
+    /**
+     * checks if the currentLocation is out of square
+     * @param r
+     * @return
+     */
     public boolean isOutOfSquare(ReminderList r) {
         // One              Two
         // Three            Four
@@ -105,6 +115,10 @@ public class GPSLocator extends Service implements LocationListener {
         return false;
     }
 
+    /**
+     * Gets the current Location from location Manager
+     * @return the current location
+     */
     public Location getCurrentLocation() {
         if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -122,22 +136,23 @@ public class GPSLocator extends Service implements LocationListener {
         return currentLocation;
     }
 
-    public GPSSquare getActual() {
-        return actual;
-    }
-
-    public void setActual(GPSSquare actual) {
-        this.actual = actual;
-    }
-
-
+    /**
+     * This Method gets called from Classes which want informations from this class.
+     * In this Project not Needed
+     * @param intent
+     * @return
+     */
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        // TODO search what to do here
+        // TODO Implement Action if some Class wants to bind to this service
         return null;
     }
 
+    /**
+     * Reloads the currentLocation when LocationManager gets a new Location from system.
+     * @param location the Location from the System
+     */
     @Override
     public void onLocationChanged(Location location) {
         currentLocation.setLongitude(location.getLongitude());
@@ -160,10 +175,27 @@ public class GPSLocator extends Service implements LocationListener {
     }
 
     // Getters and Setters Section
+
+    /**
+     * Returns the Current GPSSquare from Settings
+     * @return GPSSquare
+     */
+    public GPSSquare getActual() {
+        return actual;
+    }
+
+    /**
+     *
+     * @return
+     */
     public static Context getmContext() {
         return mContext;
     }
 
+    /**
+     *
+     * @param context
+     */
     public static void setmContext(Context context) {
         mContext = context;
     }
